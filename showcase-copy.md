@@ -295,7 +295,7 @@ Enable what matters. Disable the noise. Every event is independently toggleable.
 
 ### Step 1: Clone and install
 ```
-git clone https://github.com/user/quick-ping-2.git
+git clone https://github.com/Tobybarnes-Shop/Ping2.git
 pip3 install flask flask-cors
 ```
 Pure Python + vanilla JS. No build step. No node_modules. No webpack.
