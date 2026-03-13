@@ -1,11 +1,11 @@
 #!/bin/bash
 # Agent Sound Trigger Script
-# Usage: ~/Documents/MyEP/projects/noisy-claude/agent-sound.sh <action>
+# Usage: ~/.noisy-claude/agent-sound.sh <action>
 # Allows sub-agents to trigger sounds for specific actions
 
-QUICK_PING_DIR="${QUICK_PING_DIR:-$HOME/.quick-ping}"
-CONFIG_FILE="$QUICK_PING_DIR/config.json"
-PID_FILE="$QUICK_PING_DIR/.afplay.pid"
+NOISY_CLAUDE_DIR="${NOISY_CLAUDE_DIR:-$HOME/.noisy-claude}"
+CONFIG_FILE="$NOISY_CLAUDE_DIR/config.json"
+PID_FILE="$NOISY_CLAUDE_DIR/.afplay.pid"
 
 # Read config (focus mode and active collection)
 read_config() {
@@ -20,12 +20,12 @@ try:
     if active_collection in collections:
         sounds_path = collections[active_collection]['path']
     else:
-        sounds_path = '$QUICK_PING_DIR/sounds'
+        sounds_path = '$NOISY_CLAUDE_DIR/sounds'
 
     print(f'{focus_mode}|{sounds_path}')
 except:
-    print('smart|$QUICK_PING_DIR/sounds')
-" 2>/dev/null || echo "smart|$QUICK_PING_DIR/sounds"
+    print('smart|$NOISY_CLAUDE_DIR/sounds')
+" 2>/dev/null || echo "smart|$NOISY_CLAUDE_DIR/sounds"
 }
 
 CONFIG_DATA=$(read_config)
@@ -176,9 +176,9 @@ case "$1" in
         echo "  play <filename>               - Play specific sound"
         echo ""
         echo "Examples:"
-        echo "  ~/Documents/MyEP/projects/noisy-claude/agent-sound.sh test_passed"
-        echo "  ~/Documents/MyEP/projects/noisy-claude/agent-sound.sh agent_handoff"
-        echo "  ~/Documents/MyEP/projects/noisy-claude/agent-sound.sh play 'Good Shot FM.wav'"
+        echo "  ~/.noisy-claude/agent-sound.sh test_passed"
+        echo "  ~/.noisy-claude/agent-sound.sh agent_handoff"
+        echo "  ~/.noisy-claude/agent-sound.sh play 'Good Shot FM.wav'"
         ;;
 
     *)

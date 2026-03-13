@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
-# quick-ping-v2.sh — Enhanced Claude Code hook script v2.0
+# noisy-claude.sh — Sound feedback for Claude Code v2.0
 set -euo pipefail
 
 VERSION="2.0"
-QUICK_PING_DIR="${QUICK_PING_DIR:-$HOME/Documents/MyEP/projects/noisy-claude}"
-CONFIG_FILE="$QUICK_PING_DIR/config.json"
-PID_FILE="$QUICK_PING_DIR/.afplay.pid"
-DETECT_SCRIPT="$QUICK_PING_DIR/detect-event.sh"
+NOISY_CLAUDE_DIR="${NOISY_CLAUDE_DIR:-$HOME/.noisy-claude}"
+CONFIG_FILE="$NOISY_CLAUDE_DIR/config.json"
+PID_FILE="$NOISY_CLAUDE_DIR/.afplay.pid"
+DETECT_SCRIPT="$NOISY_CLAUDE_DIR/detect-event.sh"
 
 # CLI commands
 case "${1:-}" in
-  --version) echo "quick-ping v$VERSION"; exit 0 ;;
-  --help|-h) echo "quick-ping v$VERSION"; echo "Docs: https://quick-ping.quick.shopify.io/help.html"; exit 0 ;;
+  --version) echo "noisy-claude v$VERSION"; exit 0 ;;
+  --help|-h) echo "noisy-claude v$VERSION"; echo "Docs: https://github.com/Tobybarnes/noisy-claude"; exit 0 ;;
   --always) python3 -c "
 import json, os
-p = os.path.join(os.environ.get('QUICK_PING_DIR', os.path.expanduser('~/Documents/MyEP/projects/noisy-claude')), 'config.json')
+p = os.path.join(os.environ.get('NOISY_CLAUDE_DIR', os.path.expanduser('~/.noisy-claude')), 'config.json')
 with open(p) as f: c = json.load(f)
 c['focus_mode'] = 'always'
 with open(p,'w') as f: json.dump(c,f,indent=2); f.write('\\n')
@@ -22,7 +22,7 @@ print('Focus mode: always')
 "; exit 0 ;;
   --smart) python3 -c "
 import json, os
-p = os.path.join(os.environ.get('QUICK_PING_DIR', os.path.expanduser('~/Documents/MyEP/projects/noisy-claude')), 'config.json')
+p = os.path.join(os.environ.get('NOISY_CLAUDE_DIR', os.path.expanduser('~/.noisy-claude')), 'config.json')
 with open(p) as f: c = json.load(f)
 c['focus_mode'] = 'smart'
 with open(p,'w') as f: json.dump(c,f,indent=2); f.write('\\n')
@@ -30,7 +30,7 @@ print('Focus mode: smart')
 "; exit 0 ;;
   --mute) python3 -c "
 import json, os
-p = os.path.join(os.environ.get('QUICK_PING_DIR', os.path.expanduser('~/Documents/MyEP/projects/noisy-claude')), 'config.json')
+p = os.path.join(os.environ.get('NOISY_CLAUDE_DIR', os.path.expanduser('~/.noisy-claude')), 'config.json')
 with open(p) as f: c = json.load(f)
 c['master_enabled'] = False
 with open(p,'w') as f: json.dump(c,f,indent=2); f.write('\n')
@@ -38,7 +38,7 @@ print('Master power: OFF (all sounds muted)')
 "; exit 0 ;;
   --unmute) python3 -c "
 import json, os
-p = os.path.join(os.environ.get('QUICK_PING_DIR', os.path.expanduser('~/Documents/MyEP/projects/noisy-claude')), 'config.json')
+p = os.path.join(os.environ.get('NOISY_CLAUDE_DIR', os.path.expanduser('~/.noisy-claude')), 'config.json')
 with open(p) as f: c = json.load(f)
 c['master_enabled'] = True
 with open(p,'w') as f: json.dump(c,f,indent=2); f.write('\n')
@@ -46,7 +46,7 @@ print('Master power: ON (sounds active)')
 "; exit 0 ;;
   --status) python3 -c "
 import json, os
-p = os.path.join(os.environ.get('QUICK_PING_DIR', os.path.expanduser('~/Documents/MyEP/projects/noisy-claude')), 'config.json')
+p = os.path.join(os.environ.get('NOISY_CLAUDE_DIR', os.path.expanduser('~/.noisy-claude')), 'config.json')
 with open(p) as f: c = json.load(f)
 m = c.get('focus_mode','smart')
 v = c.get('version','1.0')
@@ -54,7 +54,7 @@ master = c.get('master_enabled', True)
 active = c.get('active_collection', 'default')
 collections = c.get('collections', {})
 
-print(f'quick-ping v{v}')
+print(f'noisy-claude v{v}')
 print(f'Master power: {\"ON\" if master else \"OFF (muted)\"}')
 print(f'Focus mode: {m}')
 print(f'\\nActive collection: {active}')
@@ -92,14 +92,14 @@ for n,e in events.items():
   --list-sounds)
     python3 -c "
 import json, os
-p = os.path.join(os.environ.get('QUICK_PING_DIR', os.path.expanduser('~/Documents/MyEP/projects/noisy-claude')), 'config.json')
+p = os.path.join(os.environ.get('NOISY_CLAUDE_DIR', os.path.expanduser('~/.noisy-claude')), 'config.json')
 with open(p) as f: config = json.load(f)
 active = config.get('active_collection', 'default')
 collections = config.get('collections', {})
 if active in collections:
     sounds_path = collections[active]['path']
 else:
-    sounds_path = os.path.join(os.environ.get('QUICK_PING_DIR', os.path.expanduser('~/Documents/MyEP/projects/noisy-claude')), 'sounds')
+    sounds_path = os.path.join(os.environ.get('NOISY_CLAUDE_DIR', os.path.expanduser('~/.noisy-claude')), 'sounds')
 import pathlib
 for f in sorted(pathlib.Path(sounds_path).glob('*')):
     if f.suffix in ['.wav', '.mp3', '.aiff', '.m4a']:
@@ -107,19 +107,19 @@ for f in sorted(pathlib.Path(sounds_path).glob('*')):
 "; exit 0 ;;
   --play)
     if [ -z "${2:-}" ]; then
-      echo "Usage: quick-ping-v2.sh --play <sound-file>"
+      echo "Usage: noisy-claude.sh --play <sound-file>"
       exit 1
     fi
     read -r SOUND_PATH VOLUME <<< $(python3 -c "
 import json, os
-p = os.path.join(os.environ.get('QUICK_PING_DIR', os.path.expanduser('~/Documents/MyEP/projects/noisy-claude')), 'config.json')
+p = os.path.join(os.environ.get('NOISY_CLAUDE_DIR', os.path.expanduser('~/.noisy-claude')), 'config.json')
 with open(p) as f: config = json.load(f)
 active = config.get('active_collection', 'default')
 collections = config.get('collections', {})
 if active in collections:
     sounds_path = collections[active]['path']
 else:
-    sounds_path = os.path.join(os.environ.get('QUICK_PING_DIR', os.path.expanduser('~/Documents/MyEP/projects/noisy-claude')), 'sounds')
+    sounds_path = os.path.join(os.environ.get('NOISY_CLAUDE_DIR', os.path.expanduser('~/.noisy-claude')), 'sounds')
 volume_percent = config.get('volume', 100)
 print(os.path.join(sounds_path, '$2'), volume_percent / 100.0)
 ")
@@ -127,8 +127,8 @@ print(os.path.join(sounds_path, '$2'), volume_percent / 100.0)
     exit 0
     ;;
   --control-panel|--ui|--config)
-    echo "🌐 Launching Quick-Ping Control Panel..."
-    exec "$QUICK_PING_DIR/launch-control-panel.sh"
+    echo "🌐 Launching Noisy Claude Control Panel..."
+    exec "$NOISY_CLAUDE_DIR/launch-control-panel.sh"
     ;;
 esac
 
@@ -156,7 +156,7 @@ fi
 if [ ! -f "$CONFIG_FILE" ]; then exit 1; fi
 
 # Update activity timestamp for idle monitor
-touch "$QUICK_PING_DIR/.last_activity" 2>/dev/null || true
+touch "$NOISY_CLAUDE_DIR/.last_activity" 2>/dev/null || true
 
 # Check master power switch
 MASTER_ENABLED=$(python3 -c "
@@ -214,7 +214,7 @@ else:
 if active in collections:
     sounds_path = collections[active]['path']
 else:
-    sounds_path = os.path.join(os.environ.get('QUICK_PING_DIR', os.path.expanduser('~/Documents/MyEP/projects/noisy-claude')), 'sounds')
+    sounds_path = os.path.join(os.environ.get('NOISY_CLAUDE_DIR', os.path.expanduser('~/.noisy-claude')), 'sounds')
 
 print(event.get('enabled', False), event.get('sound', ''), sounds_path)
 " 2>/dev/null) || continue
@@ -235,7 +235,7 @@ print(event.get('enabled', False), event.get('sound', ''), sounds_path)
   fi
 
   # Play sound with volume
-  export QUICK_PING_DIR
+  export NOISY_CLAUDE_DIR
   nohup afplay -v "$VOLUME" "$SOUND_PATH" >/dev/null 2>&1 &
   AFPLAY_PID=$!
   echo "$AFPLAY_PID" > "$PID_FILE"

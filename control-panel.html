@@ -706,6 +706,42 @@
             --color-bg-category: #161310;
         }
 
+        body.theme-mgs::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('/api/mgs-wallpaper') center center / cover no-repeat;
+            opacity: 0.12;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body.theme-mgs > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        body.theme-mgs::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 255, 0, 0.015) 2px,
+                rgba(0, 255, 0, 0.015) 4px
+            );
+            pointer-events: none;
+            z-index: 2;
+        }
+
         body.theme-mgs .btn-primary {
             background: #FFB800;
             border-color: #FFB800;
@@ -755,6 +791,453 @@
 
         body.theme-mgs .suggestion-confidence {
             color: #FFB800;
+        }
+
+        /* ============================================
+           THEME: SF2 (Arcade, Sunset, Japanese Dojo)
+           Applied via body.theme-sf2
+           Inspired by Ryu's Stage - Suzaku Castle
+           ============================================ */
+        body.theme-sf2 {
+            --color-bg-primary: #0A0A12;
+            --color-bg-panel: #12121E;
+            --color-bg-meter: #06060C;
+            --color-text-primary: #FFFFFF;
+            --color-text-secondary: rgba(255, 255, 255, 0.60);
+            --color-text-tertiary: rgba(255, 255, 255, 0.38);
+            --color-accent: #E84820;
+            --color-accent-dim: rgba(232, 72, 32, 0.12);
+            --color-border: rgba(40, 80, 180, 0.15);
+            --color-border-heavy: rgba(40, 80, 180, 0.28);
+            --color-led-off: rgba(255, 204, 0, 0.08);
+            --color-led-on: #FFCC00;
+            --color-led-bezel: #2A2A4A;
+            --color-bg-category: #1A1A2E;
+        }
+
+        body.theme-sf2::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('/api/sf2-wallpaper') center center / cover no-repeat;
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body.theme-sf2 > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* CRT scanline overlay */
+        body.theme-sf2::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 0, 0, 0.03) 2px,
+                rgba(0, 0, 0, 0.03) 4px
+            );
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        body.theme-sf2 .header {
+            border-color: rgba(40, 80, 180, 0.2);
+            background: linear-gradient(180deg, #16162A 0%, #12121E 100%);
+        }
+
+        body.theme-sf2 .header-title {
+            background: linear-gradient(90deg, #FFCC00, #E84820, #FFCC00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+        }
+
+        body.theme-sf2 .btn-primary {
+            background: #E84820;
+            border-color: #E84820;
+            color: #FFFFFF;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        body.theme-sf2 .btn-primary:hover {
+            background: #FF5A30;
+            border-color: #FF5A30;
+        }
+
+        body.theme-sf2 .btn-accent {
+            background: #12121E;
+            color: #FFCC00;
+            border-color: #FFCC00;
+        }
+
+        body.theme-sf2 .btn-accent:hover {
+            background: rgba(255, 204, 0, 0.08);
+        }
+
+        body.theme-sf2 .focus-option.active {
+            background: #E84820;
+            color: #FFFFFF;
+        }
+
+        body.theme-sf2 .toast {
+            background: #16162A;
+            border-left-color: #E84820;
+        }
+
+        body.theme-sf2 .loading {
+            border-color: #E84820;
+        }
+
+        body.theme-sf2 .spinner {
+            border-color: rgba(40, 80, 180, 0.15);
+            border-top-color: #E84820;
+        }
+
+        body.theme-sf2 .scan-count {
+            color: #FFCC00;
+        }
+
+        body.theme-sf2 .suggestion-arrow {
+            color: #FFCC00;
+        }
+
+        body.theme-sf2 .suggestion-confidence {
+            color: #FFCC00;
+        }
+
+        body.theme-sf2 .progress-bar-fill {
+            background: linear-gradient(90deg, #E84820, #FFCC00);
+        }
+
+        body.theme-sf2 .progress-complete {
+            color: #FFCC00;
+        }
+
+        body.theme-sf2 .progress-checkmark {
+            border-color: #FFCC00;
+        }
+
+        body.theme-sf2 .modal {
+            background: rgba(5, 5, 10, 0.88);
+        }
+
+        body.theme-sf2 .modal-content {
+            background: #12121E;
+            border-color: rgba(40, 80, 180, 0.2);
+        }
+
+        body.theme-sf2 .event-card {
+            border-color: rgba(40, 80, 180, 0.12);
+            background: linear-gradient(180deg, #14142A 0%, #0E0E1A 100%);
+        }
+
+        body.theme-sf2 .event-card:not(.disabled) .event-led-strip {
+            background: #FFCC00;
+            box-shadow: 0 0 4px #FFCC00, 0 0 8px rgba(255, 204, 0, 0.3);
+        }
+
+        body.theme-sf2 .category-header {
+            background: linear-gradient(90deg, #1A1A2E, #14142A);
+            border-color: rgba(40, 80, 180, 0.2);
+            color: #FFCC00;
+        }
+
+        body.theme-sf2 .switch.active::after {
+            background: #FFCC00;
+            box-shadow: 0 0 4px #FFCC00, 0 0 8px #FFCC00;
+        }
+
+        body.theme-sf2 .master-power {
+            background: linear-gradient(180deg, #16162A 0%, #12121E 100%);
+            border-color: rgba(40, 80, 180, 0.2);
+        }
+
+        body.theme-sf2 .master-power.on .master-power-led {
+            background: #FFCC00;
+            box-shadow: 0 0 6px #FFCC00, 0 0 12px rgba(255, 204, 0, 0.4);
+        }
+
+        body.theme-sf2 .master-power-switch {
+            background: #1A1A2E;
+        }
+
+        body.theme-sf2 .master-power-switch:hover {
+            background: #24243A;
+        }
+
+        body.theme-sf2 .volume-slider {
+            background: linear-gradient(90deg, #0A0A12, #1A1A2E);
+        }
+
+        body.theme-sf2 .volume-slider::-webkit-slider-thumb {
+            background: #E84820;
+        }
+
+        body.theme-sf2 .volume-slider::-webkit-slider-thumb:hover {
+            background: #FF5A30;
+        }
+
+        body.theme-sf2 .volume-slider::-moz-range-thumb {
+            background: #E84820;
+        }
+
+        body.theme-sf2 .volume-slider::-moz-range-thumb:hover {
+            background: #FF5A30;
+        }
+
+        body.theme-sf2 .sound-label {
+            color: #FFCC00;
+        }
+
+        /* ============================================
+           THEME: 2001 (HAL 9000, Space Monolith, Red Eye)
+           Applied via body.theme-2001
+           ============================================ */
+        body.theme-2001 {
+            --color-bg-primary: #040408;
+            --color-bg-panel: #0A0A10;
+            --color-bg-meter: #020204;
+            --color-text-primary: #FFFFFF;
+            --color-text-secondary: rgba(255, 255, 255, 0.55);
+            --color-text-tertiary: rgba(255, 255, 255, 0.30);
+            --color-accent: #FF2020;
+            --color-accent-dim: rgba(255, 32, 32, 0.10);
+            --color-border: rgba(255, 32, 32, 0.08);
+            --color-border-heavy: rgba(255, 32, 32, 0.18);
+            --color-led-off: rgba(255, 255, 255, 0.04);
+            --color-led-on: #FF2020;
+            --color-led-bezel: #2A2A2A;
+            --color-bg-category: #0C0C12;
+        }
+
+        body.theme-2001::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('/api/2001-wallpaper') center center / cover no-repeat;
+            opacity: 0.08;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body.theme-2001 > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* CRT / HAL lens overlay */
+        body.theme-2001::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 3px,
+                rgba(255, 32, 32, 0.008) 3px,
+                rgba(255, 32, 32, 0.008) 6px
+            );
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        body.theme-2001 .header {
+            border-bottom-color: rgba(255, 32, 32, 0.12);
+        }
+
+        body.theme-2001 .header-title {
+            color: #FF2020;
+            text-shadow: 0 0 20px rgba(255, 32, 32, 0.3);
+        }
+
+        body.theme-2001 .btn-primary {
+            background: #FF2020;
+            border-color: #FF2020;
+            color: #FFFFFF;
+        }
+
+        body.theme-2001 .btn-primary:hover {
+            background: #FF4040;
+            border-color: #FF4040;
+            color: #FFFFFF;
+        }
+
+        body.theme-2001 .btn-accent {
+            background: #0A0A10;
+            color: #FF2020;
+            border-color: #FF2020;
+        }
+
+        body.theme-2001 .btn-accent:hover {
+            background: rgba(255, 32, 32, 0.08);
+        }
+
+        body.theme-2001 .focus-option.active {
+            background: #FF2020;
+            color: #FFFFFF;
+        }
+
+        body.theme-2001 .toast {
+            background: #0A0A10;
+            border-left-color: #FF2020;
+        }
+
+        body.theme-2001 .loading {
+            border-color: #FF2020;
+        }
+
+        body.theme-2001 .spinner {
+            border-top-color: #FF2020;
+        }
+
+        body.theme-2001 .scan-count {
+            color: #FF2020;
+        }
+
+        body.theme-2001 .suggestion-arrow {
+            color: #FF2020;
+        }
+
+        body.theme-2001 .suggestion-confidence {
+            color: #FF2020;
+        }
+
+        body.theme-2001 .progress-bar-fill {
+            background: linear-gradient(90deg, #FF2020, #FF6060);
+        }
+
+        body.theme-2001 .progress-complete {
+            color: #FF2020;
+        }
+
+        body.theme-2001 .progress-checkmark {
+            border-color: #FF2020;
+        }
+
+        body.theme-2001 .modal {
+            background: rgba(2, 2, 4, 0.92);
+        }
+
+        body.theme-2001 .modal-content {
+            background: #0A0A10;
+            border-color: rgba(255, 32, 32, 0.15);
+        }
+
+        body.theme-2001 .event-card {
+            border-color: rgba(255, 32, 32, 0.08);
+            background: linear-gradient(180deg, #0C0C14 0%, #080810 100%);
+        }
+
+        body.theme-2001 .event-card:not(.disabled) .event-led-strip {
+            background: #FF2020;
+            box-shadow: 0 0 4px #FF2020, 0 0 8px rgba(255, 32, 32, 0.3);
+        }
+
+        body.theme-2001 .category-header {
+            background: linear-gradient(90deg, #0E0E16, #0A0A12);
+            border-color: rgba(255, 32, 32, 0.12);
+            color: #FF2020;
+        }
+
+        body.theme-2001 .switch.active::after {
+            background: #FF2020;
+            box-shadow: 0 0 4px #FF2020, 0 0 8px #FF2020;
+        }
+
+        body.theme-2001 .master-power {
+            background: linear-gradient(180deg, #0C0C14 0%, #080810 100%);
+            border-color: rgba(255, 32, 32, 0.12);
+        }
+
+        body.theme-2001 .master-power.on .master-power-led {
+            background: #FF2020;
+            box-shadow: 0 0 6px #FF2020, 0 0 12px rgba(255, 32, 32, 0.4);
+        }
+
+        body.theme-2001 .master-power-switch {
+            background: #0E0E16;
+        }
+
+        body.theme-2001 .master-power-switch:hover {
+            background: #161620;
+        }
+
+        body.theme-2001 .volume-slider {
+            background: linear-gradient(90deg, #040408, #0E0E16);
+        }
+
+        body.theme-2001 .volume-slider::-webkit-slider-thumb {
+            background: #FF2020;
+        }
+
+        body.theme-2001 .volume-slider::-webkit-slider-thumb:hover {
+            background: #FF4040;
+        }
+
+        body.theme-2001 .volume-slider::-moz-range-thumb {
+            background: #FF2020;
+        }
+
+        body.theme-2001 .volume-slider::-moz-range-thumb:hover {
+            background: #FF4040;
+        }
+
+        body.theme-2001 .sound-label {
+            color: #FF2020;
+        }
+
+        /* CLICK-TO-PLAY CARDS - All themes */
+        .btn-play {
+            display: none;
+        }
+
+        .event-card {
+            cursor: pointer;
+            transition: all 120ms ease;
+        }
+
+        .event-card:hover {
+            border-color: var(--color-border-heavy);
+            box-shadow: 0 0 12px var(--color-accent-dim);
+        }
+
+        .event-card:active {
+            transform: scale(0.98);
+        }
+
+        .event-card.playing {
+            border-color: var(--color-led-on);
+            box-shadow: 0 0 16px var(--color-accent-dim);
+        }
+
+        .event-card.playing .event-led-strip {
+            background: var(--color-accent) !important;
+            box-shadow: 0 0 8px var(--color-accent), 0 0 16px var(--color-accent-dim) !important;
+            animation: card-flash 150ms ease 2;
+        }
+
+        @keyframes card-flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
         }
 
         /* ACCESSIBILITY */
@@ -1583,6 +2066,7 @@
                 <button class="btn btn-primary" id="saveConfig" aria-label="Save configuration changes">Save Changes</button>
                 <button class="btn" id="enableAll" aria-label="Enable all events">Enable All</button>
                 <button class="btn" id="disableAll" aria-label="Disable all events">Disable All</button>
+                <a href="http://localhost:8080/noisy-claude-3d/index.html" class="btn" style="text-decoration:none;display:inline-flex;align-items:center;gap:4px;border-color:rgba(0,255,136,0.3);color:#00ff88;" aria-label="Switch to 3D view">&#9670; 3D View</a>
             </div>
 
             <label for="searchBox" class="sr-only">Search events</label>
@@ -1880,9 +2364,20 @@
                 if (labelEl) labelEl.textContent = '';
             });
 
-            // Play sound
+            // Play sound - button (non-SF2 themes)
             card.querySelector('.btn-play').addEventListener('click', (e) => {
                 playSound(e.target.dataset.sound);
+            });
+
+            // Play sound - click card
+            card.addEventListener('click', (e) => {
+                // Don't play when interacting with controls
+                if (e.target.closest('.switch, .sound-select')) return;
+                const sound = card.querySelector('.btn-play')?.dataset.sound;
+                if (!sound) return;
+                playSound(sound);
+                card.classList.add('playing');
+                setTimeout(() => card.classList.remove('playing'), 400);
             });
 
             return card;
@@ -2351,12 +2846,18 @@
             'Sims2': 'theme-sims',
             'sims2': 'theme-sims',
             'sims': 'theme-sims',
-            'default': 'theme-sims'
+            'default': 'theme-sims',
+            'sf2': 'theme-sf2',
+            'SF2': 'theme-sf2',
+            'street-fighter-2': 'theme-sf2',
+            '2001': 'theme-2001',
+            'hal': 'theme-2001',
+            'hal9000': 'theme-2001'
         };
 
         function applyCollectionTheme(collectionId) {
             // Remove all theme classes
-            document.body.classList.remove('theme-mgs', 'theme-sims');
+            document.body.classList.remove('theme-mgs', 'theme-sims', 'theme-sf2', 'theme-2001');
 
             // Apply matching theme if one exists
             const themeClass = collectionThemes[collectionId];

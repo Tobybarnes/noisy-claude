@@ -1,18 +1,18 @@
-# Decision Log -- Quick-Ping Showcase Site
+# Decision Log -- Noisy Claude Showcase Site
 
 Records key decisions made during the project, their rationale, and alternatives considered.
 
 ---
 
-## DEC-001: Showcase site is a separate project from the main Quick-Ping repo
+## DEC-001: Showcase site is a separate project from the main Noisy Claude repo
 
 **Date**: 2026-02-13
 **Status**: Decided
 **Decider**: Team Lead
 
-**Context**: Quick-Ping v2.0 is a developer tool (bash scripts, Python server, config files). The showcase site is a marketing/demo page. They serve different purposes and audiences.
+**Context**: Noisy Claude is a developer tool (bash scripts, Python server, config files). The showcase site is a marketing/demo page. They serve different purposes and audiences.
 
-**Decision**: The showcase site will be developed in a `/showcase` working directory but deployed as its own repository and GitHub Pages site, separate from the main Quick-Ping tool repo.
+**Decision**: The showcase site will be developed in a `/showcase` working directory but deployed as its own repository and GitHub Pages site, separate from the main Noisy Claude tool repo.
 
 **Rationale**:
 - Different release cadences (tool vs. marketing site)
@@ -32,12 +32,12 @@ Records key decisions made during the project, their rationale, and alternatives
 **Status**: Decided
 **Decider**: Operations
 
-**Context**: The showcase site needs to demo Quick-Ping with interactive sound playback. Options range from a simple HTML page to a full framework (React, Astro, Next.js).
+**Context**: The showcase site needs to demo Noisy Claude with interactive sound playback. Options range from a simple HTML page to a full framework (React, Astro, Next.js).
 
 **Decision**: Plain HTML, CSS, and JavaScript. No framework. No build step.
 
 **Rationale**:
-- Matches Quick-Ping's own architecture (control-panel.html is vanilla JS)
+- Matches Noisy Claude's own architecture (control-panel.html is vanilla JS)
 - Fastest path to deployment
 - Zero dependency management
 - GitHub Pages deploys without build configuration
@@ -174,7 +174,7 @@ See DEPLOY.md for the full comparison matrix.
 Think Spotify showcasing different playlists -- the player is neutral, but each playlist has its own visual world.
 
 **Rationale**:
-- Quick-Ping is a platform for collections, not an MGS-branded tool
+- Noisy Claude is a platform for collections, not an MGS-branded tool
 - The contrast between collections IS the value proposition
 - A neutral frame lets both collections express their unique character
 - Users who prefer Sims 2 shouldn't feel like the site is selling them something else
@@ -278,7 +278,7 @@ UI change -- in `createEventCard()` (line 1228 of control-panel.html), add a `<s
 **Status**: Implemented (see also DEC-015 for CLI details)
 **Decider**: User / Team Lead
 
-**Context**: Users on a sudden call or in a meeting need to silence Quick-Ping instantly without disabling individual event settings.
+**Context**: Users on a sudden call or in a meeting need to silence Noisy Claude instantly without disabling individual event settings.
 
 **Decision**: Master power switch -- a single toggle that silences all sounds while preserving individual event configuration.
 
@@ -286,7 +286,7 @@ UI change -- in `createEventCard()` (line 1228 of control-panel.html), add a `<s
 
 1. **config.json** -- `"master_enabled": true` at top level.
 
-2. **quick-ping-v2.sh** -- Master check at lines 139-146, runs before focus mode check. Early exit if `master_enabled` is `false`. CLI commands: `--mute` / `--unmute`. `--status` shows master power state.
+2. **noisy-claude.sh** -- Master check at lines 139-146, runs before focus mode check. Early exit if `master_enabled` is `false`. CLI commands: `--mute` / `--unmute`. `--status` shows master power state.
 
 3. **control-panel.html** -- Skeuomorphic 72x36px rocker switch with sliding paddle and embossed ON/OFF labels. Own rack-unit strip between title header and controls nav. Features:
    - Power indicator LED (red default, teal for Sims, amber for MGS)
@@ -369,11 +369,11 @@ UI change -- in `createEventCard()` (line 1228 of control-panel.html), add a `<s
 **Status**: Decided (extends DEC-011)
 **Decider**: Developer (implementation)
 
-**Context**: DEC-011 documented the master switch with a config field and UI toggle. The implementation also added `--mute` and `--unmute` CLI commands to `quick-ping-v2.sh`, plus the `--status` command now shows master power state.
+**Context**: DEC-011 documented the master switch with a config field and UI toggle. The implementation also added `--mute` and `--unmute` CLI commands to `noisy-claude.sh`, plus the `--status` command now shows master power state.
 
 **Decision**: Master power is controllable via three interfaces:
 1. `config.json` field: `master_enabled` (boolean)
-2. CLI: `quick-ping-v2.sh --mute` / `quick-ping-v2.sh --unmute`
+2. CLI: `noisy-claude.sh --mute` / `noisy-claude.sh --unmute`
 3. Control Panel UI: Power switch + Cmd+Shift+M keyboard shortcut
 
 ---

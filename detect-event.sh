@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# detect-event.sh — Enhanced event detection for quick-ping v2.0
+# detect-event.sh — Enhanced event detection for Noisy Claude v2.0
 set -euo pipefail
 
-QUICK_PING_DIR="${QUICK_PING_DIR:-$HOME/Documents/MyEP/Projects/noisy-claude}"
-STATE_DIR="$QUICK_PING_DIR/.state"
+NOISY_CLAUDE_DIR="${NOISY_CLAUDE_DIR:-$HOME/.noisy-claude}"
+STATE_DIR="$NOISY_CLAUDE_DIR/.state"
 mkdir -p "$STATE_DIR"
 
 # Read hook input

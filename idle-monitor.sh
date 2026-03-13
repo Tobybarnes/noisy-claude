@@ -2,7 +2,7 @@
 # idle-monitor.sh - Plays gentle reminder sound after 10 minutes of inactivity
 set -euo pipefail
 
-NOISY_CLAUDE_DIR="${NOISY_CLAUDE_DIR:-$HOME/Documents/MyEP/Projects/noisy-claude}"
+NOISY_CLAUDE_DIR="${NOISY_CLAUDE_DIR:-$HOME/.noisy-claude}"
 CONFIG_FILE="$NOISY_CLAUDE_DIR/config.json"
 TIMESTAMP_FILE="$NOISY_CLAUDE_DIR/.last_activity"
 IDLE_MINUTES=10
@@ -25,7 +25,7 @@ if event.get('enabled'):
     if active in collections:
         sounds_path = collections[active]['path']
     else:
-        sounds_path = os.path.join(os.environ.get('NOISY_CLAUDE_DIR', os.path.expanduser('~/Documents/MyEP/Projects/noisy-claude')), 'sounds')
+        sounds_path = os.path.join(os.environ.get('NOISY_CLAUDE_DIR', os.path.expanduser('~/.noisy-claude')), 'sounds')
 
     sound_file = event.get('sound', '')
     if sound_file:

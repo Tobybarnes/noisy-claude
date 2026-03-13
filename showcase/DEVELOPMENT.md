@@ -1,4 +1,4 @@
-# Development Guide -- Quick-Ping Showcase Site
+# Development Guide -- Noisy Claude Showcase Site
 
 Guide for building and maintaining the showcase site.
 
@@ -17,8 +17,8 @@ No npm, no node_modules, no build tools required.
 
 ```bash
 # Clone the showcase site repo
-git clone git@github.com:USERNAME/quick-ping-site.git
-cd quick-ping-site
+git clone git@github.com:USERNAME/noisy-claude-site.git
+cd noisy-claude-site
 
 # Start a local server (any of these work)
 python3 -m http.server 8080
@@ -32,7 +32,7 @@ Visit http://localhost:8080
 ### File Structure
 
 ```
-quick-ping-site/
+noisy-claude-site/
   index.html              # The entire showcase site (single file)
   favicon.ico
   CNAME                   # Custom domain config (if applicable)
@@ -41,7 +41,7 @@ quick-ping-site/
 
 The site is a **single HTML file** with all CSS inline in `<style>` and all JS inline at the bottom of `<body>`. No external CSS, JS, or image files. All visual elements are CSS-generated (LEDs, borders, grids, gradients). The only external dependency is Google Fonts (IBM Plex Mono).
 
-The working prototype is at `showcase-site.html` in the main Quick-Ping repo.
+The working prototype is at `showcase-site.html` in the main Noisy Claude repo.
 
 ### Key Conventions
 
@@ -180,7 +180,7 @@ The showcase site demonstrates both themes side-by-side in the `.cp-dual` grid s
 
 **Theme-aware**: Full CSS overrides for `body.theme-sims` and `body.theme-mgs` -- housing color, paddle gradient, LED color, border accents all adapt.
 
-**Shell script** (`quick-ping-v2.sh`): Master check at lines 139-146, runs before focus mode check. CLI commands: `--mute` / `--unmute`. `--status` shows master power state.
+**Shell script** (`noisy-claude.sh`): Master check at lines 139-146, runs before focus mode check. CLI commands: `--mute` / `--unmute`. `--status` shows master power state.
 
 Independent of focus_mode. Master off = silence regardless of focus mode setting.
 

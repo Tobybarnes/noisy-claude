@@ -2,8 +2,8 @@
 # Claude Code Slack Notifications
 # Sends Slack messages when Claude Code hooks fire
 
-QUICK_PING_DIR="${QUICK_PING_DIR:-$HOME/.quick-ping}"
-CONFIG_FILE="$QUICK_PING_DIR/slack-config.json"
+NOISY_CLAUDE_DIR="${NOISY_CLAUDE_DIR:-$HOME/.noisy-claude}"
+CONFIG_FILE="$NOISY_CLAUDE_DIR/slack-config.json"
 
 # Read Slack webhook URL from config
 if [[ ! -f "$CONFIG_FILE" ]]; then

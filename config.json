@@ -1,10 +1,298 @@
 {
   "version": "2.0",
   "master_enabled": true,
-  "volume": 16,
+  "volume": 73,
   "focus_mode": "always",
-  "active_collection": "default",
+  "active_collection": "mgs",
   "collections": {
+    "sf2": {
+      "name": "Street Fighter II",
+      "path": "/Users/tobybarnes_shop/Documents/MyEP/Projects/noisy-claude/sounds/SF2",
+      "description": "Street Fighter II arcade sounds - every session is a fight",
+      "events": {
+        "afternoon": {
+          "description": "Afternoon session (12pm-5pm)",
+          "enabled": true,
+          "sound": "sfx-coin-insert.wav",
+          "sound_label": "Coin insert - new credits"
+        },
+        "agent_response": {
+          "description": "When Claude responds",
+          "enabled": true,
+          "sound": "sfx-counter.wav",
+          "sound_label": "Counter strike"
+        },
+        "background_task_done": {
+          "description": "When async task completes",
+          "enabled": true,
+          "sound": "sfx-bonus-break.wav",
+          "sound_label": "Bonus barrel break"
+        },
+        "build_complete": {
+          "description": "When build/compilation finishes",
+          "enabled": true,
+          "sound": "sfx-victory-sting.wav",
+          "sound_label": "Victory sting"
+        },
+        "build_error": {
+          "description": "When build fails",
+          "enabled": true,
+          "sound": "sfx-defeat-theme.wav",
+          "sound_label": "Defeat theme"
+        },
+        "context_50": {
+          "description": "50% context usage",
+          "enabled": true,
+          "sound": "announcer-round2.wav",
+          "sound_label": "Announcer: ROUND 2"
+        },
+        "context_75": {
+          "description": "75% context usage",
+          "enabled": true,
+          "sound": "announcer-round3.wav",
+          "sound_label": "Announcer: ROUND 3"
+        },
+        "context_90": {
+          "description": "90% context usage - time to wrap up!",
+          "enabled": true,
+          "sound": "announcer-final-round.wav",
+          "sound_label": "Announcer: FINAL ROUND"
+        },
+        "error_threshold": {
+          "description": "Multiple tool failures in sequence",
+          "enabled": true,
+          "sound": "announcer-game-over.wav",
+          "sound_label": "Announcer: GAME OVER",
+          "threshold_count": 3
+        },
+        "evening": {
+          "description": "Evening session (5pm-10pm)",
+          "enabled": true,
+          "sound": "sfx-select-confirm.wav",
+          "sound_label": "Character select confirm"
+        },
+        "git_commit": {
+          "description": "When a git commit succeeds",
+          "enabled": true,
+          "sound": "ryu-hadoken.wav",
+          "sound_label": "Ryu: HADOKEN!"
+        },
+        "git_error": {
+          "description": "When a git operation fails",
+          "enabled": true,
+          "sound": "sfx-ko-impact.wav",
+          "sound_label": "K.O. impact hit"
+        },
+        "git_pr_create": {
+          "description": "When a PR is created",
+          "enabled": true,
+          "sound": "announcer-perfect.wav",
+          "sound_label": "Announcer: PERFECT!"
+        },
+        "git_push": {
+          "description": "When a git push succeeds",
+          "enabled": true,
+          "sound": "ryu-shoryuken.wav",
+          "sound_label": "Ryu: SHORYUKEN!"
+        },
+        "idle_reminder": {
+          "description": "Idle for 10+ minutes",
+          "enabled": true,
+          "sound": "announcer-continue.wav",
+          "sound_label": "Announcer: CONTINUE?"
+        },
+        "late_night": {
+          "description": "Late night session (10pm-6am) - get some rest!",
+          "enabled": true,
+          "sound": "announcer-continue.wav",
+          "sound_label": "Announcer: CONTINUE?"
+        },
+        "long_task": {
+          "description": "When a task takes >30 seconds",
+          "enabled": true,
+          "sound": "sfx-continue-theme.wav",
+          "sound_label": "Continue countdown theme",
+          "threshold_seconds": 30
+        },
+        "morning": {
+          "description": "First session of the day (6am-12pm)",
+          "enabled": true,
+          "sound": "announcer-round1.wav",
+          "sound_label": "Announcer: ROUND 1"
+        },
+        "permission": {
+          "description": "When Claude needs permission",
+          "enabled": true,
+          "sound": "sfx-timer-warning.wav",
+          "sound_label": "Timer warning - waiting!"
+        },
+        "plan_mode_enter": {
+          "description": "When entering plan mode",
+          "enabled": true,
+          "sound": "announcer-ready.wav",
+          "sound_label": "Announcer: READY"
+        },
+        "plan_mode_exit": {
+          "description": "When exiting plan mode",
+          "enabled": true,
+          "sound": "announcer-fight.wav",
+          "sound_label": "Announcer: FIGHT!"
+        },
+        "session_end": {
+          "description": "When Claude Code session ends",
+          "enabled": true,
+          "sound": "sfx-win-theme.wav",
+          "sound_label": "Victory theme"
+        },
+        "session_start": {
+          "description": "When Claude Code session starts",
+          "enabled": true,
+          "sound": "announcer-fight.wav",
+          "sound_label": "Announcer: FIGHT!"
+        },
+        "skill_commit": {
+          "description": "When /commit skill runs",
+          "enabled": true,
+          "sound": "ryu-hadoken.wav",
+          "sound_label": "Ryu: HADOKEN!"
+        },
+        "skill_deploy": {
+          "description": "When /deploy-weekly skill runs",
+          "enabled": true,
+          "sound": "sagat-tiger-uppercut.wav",
+          "sound_label": "Sagat: TIGER UPPERCUT!"
+        },
+        "skill_gsd": {
+          "description": "When /gsd review skill runs",
+          "enabled": true,
+          "sound": "dhalsim-yoga-fire.wav",
+          "sound_label": "Dhalsim: YOGA FIRE!"
+        },
+        "skill_newday": {
+          "description": "When /newday skill runs",
+          "enabled": true,
+          "sound": "announcer-round1.wav",
+          "sound_label": "Announcer: ROUND 1"
+        },
+        "skill_publish": {
+          "description": "When /publish skill runs",
+          "enabled": true,
+          "sound": "ryu-tatsumaki.wav",
+          "sound_label": "Ryu: TATSUMAKI!"
+        },
+        "streak_10": {
+          "description": "10 successful operations - you're on fire!",
+          "enabled": true,
+          "sound": "chunli-lightning-kicks.wav",
+          "sound_label": "Chun-Li: Lightning Kicks!"
+        },
+        "streak_3": {
+          "description": "3 successful operations in a row",
+          "enabled": true,
+          "sound": "sfx-heavy-punch.wav",
+          "sound_label": "Heavy punch combo"
+        },
+        "streak_5": {
+          "description": "5 successful operations in a row",
+          "enabled": true,
+          "sound": "ken-shoryuken.wav",
+          "sound_label": "Ken: SHORYUKEN!"
+        },
+        "subagent_start": {
+          "description": "When a subagent launches",
+          "enabled": true,
+          "sound": "ken-hadoken.wav",
+          "sound_label": "Ken enters the fight"
+        },
+        "subagent_stop": {
+          "description": "When a subagent completes",
+          "enabled": true,
+          "sound": "ken-victory1.wav",
+          "sound_label": "Ken: Victory pose"
+        },
+        "task_complete": {
+          "description": "When Claude finishes processing",
+          "enabled": true,
+          "sound": "sfx-round-end.wav",
+          "sound_label": "Round complete bell"
+        },
+        "team_created": {
+          "description": "When a team is created",
+          "enabled": true,
+          "sound": "sfx-stage-intro.wav",
+          "sound_label": "Stage intro - team assembled"
+        },
+        "team_deleted": {
+          "description": "When a team is deleted",
+          "enabled": true,
+          "sound": "sfx-round-end.wav",
+          "sound_label": "Round end bell"
+        },
+        "teammate_message": {
+          "description": "When a teammate sends a message",
+          "enabled": true,
+          "sound": "sfx-cursor-move.wav",
+          "sound_label": "Cursor move blip"
+        },
+        "test_fail": {
+          "description": "When tests fail",
+          "enabled": true,
+          "sound": "announcer-ko.wav",
+          "sound_label": "Announcer: K.O.!"
+        },
+        "test_pass": {
+          "description": "When tests pass",
+          "enabled": true,
+          "sound": "announcer-you-win.wav",
+          "sound_label": "Announcer: YOU WIN!"
+        },
+        "thinking_long": {
+          "description": "Deep thinking (>15s)",
+          "enabled": true,
+          "sound": "dhalsim-meditation.wav",
+          "sound_label": "Dhalsim: Deep meditation",
+          "threshold_seconds": 15
+        },
+        "thinking_medium": {
+          "description": "Medium thinking (5-15s)",
+          "enabled": true,
+          "sound": "sfx-charge.wav",
+          "sound_label": "Charging up...",
+          "threshold_seconds": 15
+        },
+        "thinking_short": {
+          "description": "Quick thinking (<5s)",
+          "enabled": true,
+          "sound": "sfx-light-punch.wav",
+          "sound_label": "Light punch - quick jab",
+          "threshold_seconds": 5
+        },
+        "tool_failure": {
+          "description": "When a tool fails",
+          "enabled": true,
+          "sound": "sfx-block.wav",
+          "sound_label": "Blocked!"
+        },
+        "tool_pre": {
+          "description": "Before any tool executes",
+          "enabled": true,
+          "sound": "sfx-quick-hit.wav",
+          "sound_label": "Quick hit"
+        },
+        "tool_success": {
+          "description": "When a tool executes successfully",
+          "enabled": true,
+          "sound": "sfx-light-kick.wav",
+          "sound_label": "Light kick connect"
+        },
+        "user_prompt": {
+          "description": "When you send a message",
+          "enabled": true,
+          "sound": "sfx-medium-punch.wav",
+          "sound_label": "Medium punch input"
+        }
+      }
+    },
     "default": {
       "name": "Sims 2 Sounds",
       "path": "/Users/tobybarnes_shop/Documents/MyEP/Projects/noisy-claude/sounds/Sims2",
@@ -94,6 +382,12 @@
           "enabled": true,
           "sound": "FemaleSKSSSuccess.wav",
           "sound_label": "Female skill success"
+        },
+        "idle_reminder": {
+          "description": "Idle for 10+ minutes",
+          "enabled": true,
+          "sound": "mWAITING0.wav",
+          "sound_label": "Gentle waiting"
         },
         "late_night": {
           "description": "Late night session (10pm-6am) - get some rest!",
@@ -377,6 +671,12 @@
           "sound": "0x08.wav",
           "sound_label": "Transmission sent"
         },
+        "idle_reminder": {
+          "description": "Idle for 10+ minutes",
+          "enabled": true,
+          "sound": "0x10.wav",
+          "sound_label": "Codec ring"
+        },
         "late_night": {
           "description": "Late night session (10pm-6am) - get some rest!",
           "enabled": true,
@@ -423,8 +723,8 @@
         "session_start": {
           "description": "When Claude Code session starts",
           "enabled": true,
-          "sound": "0x1a.wav",
-          "sound_label": "Codec ring"
+          "sound": "0x79.wav",
+          "sound_label": ""
         },
         "skill_commit": {
           "description": "When /commit skill runs",
@@ -566,6 +866,289 @@
           "enabled": true,
           "sound": "0x68.wav",
           "sound_label": "Input received"
+        }
+      }
+    },
+    "2001": {
+      "name": "HAL 9000",
+      "path": "/Users/tobybarnes_shop/Documents/MyEP/Projects/noisy-claude/sounds/2001-archive-sounds",
+      "description": "2001: A Space Odyssey \u2014 I'm sorry Dave, I'm afraid I can't do that",
+      "events": {
+        "session_start": {
+          "sound": "hihal.wav",
+          "sound_label": "Hi HAL",
+          "description": "When Claude Code session starts",
+          "enabled": true
+        },
+        "session_end": {
+          "sound": "goodbye.wav",
+          "sound_label": "Goodbye Dave",
+          "description": "When Claude Code session ends",
+          "enabled": true
+        },
+        "task_complete": {
+          "sound": "mission.wav",
+          "sound_label": "Mission complete",
+          "description": "When Claude finishes processing",
+          "enabled": true
+        },
+        "permission": {
+          "sound": "moment.wav",
+          "sound_label": "Just a moment",
+          "description": "When Claude needs permission",
+          "enabled": true
+        },
+        "tool_success": {
+          "sound": "sure.wav",
+          "sound_label": "Sure",
+          "description": "When a tool executes successfully",
+          "enabled": true
+        },
+        "tool_failure": {
+          "sound": "error.wav",
+          "sound_label": "Error detected",
+          "description": "When a tool fails",
+          "enabled": true
+        },
+        "tool_pre": {
+          "sound": "game.wav",
+          "sound_label": "Game on",
+          "description": "Before any tool executes",
+          "enabled": true
+        },
+        "user_prompt": {
+          "sound": "dave.wav",
+          "sound_label": "Yes Dave?",
+          "description": "When you send a message",
+          "enabled": true
+        },
+        "agent_response": {
+          "sound": "info.wav",
+          "sound_label": "Information",
+          "description": "When Claude responds",
+          "enabled": true
+        },
+        "subagent_start": {
+          "sound": "open.wav",
+          "sound_label": "Open the pod bay doors",
+          "description": "When a subagent launches",
+          "enabled": true
+        },
+        "subagent_stop": {
+          "sound": "nothing.wav",
+          "sound_label": "Nothing there",
+          "description": "When a subagent completes",
+          "enabled": true
+        },
+        "team_created": {
+          "sound": "mission.wav",
+          "sound_label": "Mission briefing",
+          "description": "When a team is created",
+          "enabled": true
+        },
+        "team_deleted": {
+          "sound": "disconne.wav",
+          "sound_label": "Disconnect",
+          "description": "When a team is deleted",
+          "enabled": true
+        },
+        "teammate_message": {
+          "sound": "dave.wav",
+          "sound_label": "Dave?",
+          "description": "When a teammate sends a message",
+          "enabled": true
+        },
+        "git_commit": {
+          "sound": "better.wav",
+          "sound_label": "Better and better",
+          "description": "When a git commit succeeds",
+          "enabled": true
+        },
+        "git_push": {
+          "sound": "well.wav",
+          "sound_label": "Very well",
+          "description": "When a git push succeeds",
+          "enabled": true
+        },
+        "git_pr_create": {
+          "sound": "hal9000.wav",
+          "sound_label": "HAL 9000",
+          "description": "When a PR is created",
+          "enabled": true
+        },
+        "git_error": {
+          "sound": "fault.wav",
+          "sound_label": "Fault detected",
+          "description": "When a git operation fails",
+          "enabled": true
+        },
+        "test_pass": {
+          "sound": "foolprf.wav",
+          "sound_label": "Foolproof",
+          "description": "When tests pass",
+          "enabled": true
+        },
+        "test_fail": {
+          "sound": "cantdo.wav",
+          "sound_label": "I can't do that",
+          "description": "When tests fail",
+          "enabled": true
+        },
+        "build_complete": {
+          "sound": "well.wav",
+          "sound_label": "Very well",
+          "description": "When build finishes",
+          "enabled": true
+        },
+        "build_error": {
+          "sound": "difficult.wav",
+          "sound_label": "Difficult",
+          "description": "When build fails",
+          "enabled": true
+        },
+        "plan_mode_enter": {
+          "sound": "puzzlin.wav",
+          "sound_label": "Puzzling",
+          "description": "When entering plan mode",
+          "enabled": true
+        },
+        "plan_mode_exit": {
+          "sound": "decision.wav",
+          "sound_label": "Decision made",
+          "description": "When exiting plan mode",
+          "enabled": true
+        },
+        "long_task": {
+          "sound": "stresspi.wav",
+          "sound_label": "Stress analysis",
+          "description": "When a task takes >30 seconds",
+          "enabled": true
+        },
+        "error_threshold": {
+          "sound": "worry.wav",
+          "sound_label": "Worried",
+          "description": "Multiple tool failures in sequence",
+          "enabled": true
+        },
+        "background_task_done": {
+          "sound": "noquesti.wav",
+          "sound_label": "No question about it",
+          "description": "When async task completes",
+          "enabled": true
+        },
+        "thinking_short": {
+          "sound": "game.wav",
+          "sound_label": "Game",
+          "description": "Quick thinking (<5s)",
+          "enabled": true
+        },
+        "thinking_medium": {
+          "sound": "puzzlin.wav",
+          "sound_label": "Puzzling",
+          "description": "Medium thinking (5-15s)",
+          "enabled": true
+        },
+        "thinking_long": {
+          "sound": "track.wav",
+          "sound_label": "Tracking",
+          "description": "Deep thinking (>15s)",
+          "enabled": true
+        },
+        "context_50": {
+          "sound": "odd.wav",
+          "sound_label": "Something odd",
+          "description": "50% context usage",
+          "enabled": true
+        },
+        "context_75": {
+          "sound": "feelit.wav",
+          "sound_label": "I can feel it",
+          "description": "75% context usage",
+          "enabled": true
+        },
+        "context_90": {
+          "sound": "personal.wav",
+          "sound_label": "Personal concerns",
+          "description": "90% context usage",
+          "enabled": true
+        },
+        "streak_3": {
+          "sound": "better.wav",
+          "sound_label": "Better and better",
+          "description": "3 successful operations in a row",
+          "enabled": true
+        },
+        "streak_5": {
+          "sound": "foolprf.wav",
+          "sound_label": "Foolproof",
+          "description": "5 successful operations in a row",
+          "enabled": true
+        },
+        "streak_10": {
+          "sound": "hal9000.wav",
+          "sound_label": "HAL 9000 introduction",
+          "description": "10 successful operations",
+          "enabled": true
+        },
+        "morning": {
+          "sound": "hihal.wav",
+          "sound_label": "Hi HAL",
+          "description": "First session of the day",
+          "enabled": true
+        },
+        "afternoon": {
+          "sound": "info.wav",
+          "sound_label": "Information",
+          "description": "Afternoon session",
+          "enabled": true
+        },
+        "evening": {
+          "sound": "daisy.wav",
+          "sound_label": "Daisy Bell",
+          "description": "Evening session",
+          "enabled": true
+        },
+        "late_night": {
+          "sound": "daisy.wav",
+          "sound_label": "Daisy Bell",
+          "description": "Late night session",
+          "enabled": true
+        },
+        "skill_commit": {
+          "sound": "sure.wav",
+          "sound_label": "Sure",
+          "description": "When /commit skill runs",
+          "enabled": true
+        },
+        "skill_newday": {
+          "sound": "hihal.wav",
+          "sound_label": "Hi HAL",
+          "description": "When /newday skill runs",
+          "enabled": true
+        },
+        "skill_publish": {
+          "sound": "mission.wav",
+          "sound_label": "Mission",
+          "description": "When /publish skill runs",
+          "enabled": true
+        },
+        "skill_deploy": {
+          "sound": "open.wav",
+          "sound_label": "Open the pod bay doors",
+          "description": "When /deploy skill runs",
+          "enabled": true
+        },
+        "skill_gsd": {
+          "sound": "decision.wav",
+          "sound_label": "Decision",
+          "description": "When /gsd skill runs",
+          "enabled": true
+        },
+        "idle_reminder": {
+          "sound": "silly.wav",
+          "sound_label": "Silly thing",
+          "description": "Idle for 10+ minutes",
+          "enabled": true
         }
       }
     }

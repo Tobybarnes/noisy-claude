@@ -4,14 +4,14 @@ Get started with multiple sound libraries in 5 minutes.
 
 ## What Are Collections?
 
-Collections let you manage multiple sound libraries and switch between them instantly. Think of them as "themes" or "sound packs" for quick-ping.
+Collections let you manage multiple sound libraries and switch between them instantly. Think of them as "themes" or "sound packs" for noisy-claude.
 
 ## Quick Setup
 
 ### Step 1: Launch Control Panel
 
 ```bash
-~/.quick-ping/launch-control-panel.sh
+~/.noisy-claude/launch-control-panel.sh
 ```
 
 Then open: **http://localhost:5050**
@@ -103,14 +103,14 @@ Claude can automatically map sounds to events based on filename keywords:
 ### Check Current Collection
 
 ```bash
-~/.quick-ping/quick-ping-v2.sh --status
+~/.noisy-claude/noisy-claude.sh --status
 ```
 
 Shows:
 ```
 Active collection: default
   Name: Sims Sounds
-  Path: /Users/username/.quick-ping/sounds
+  Path: /Users/username/.noisy-claude/sounds
 
 Total collections: 2
   → default: Sims Sounds
@@ -120,13 +120,13 @@ Total collections: 2
 ### List Sounds from Active Collection
 
 ```bash
-~/.quick-ping/quick-ping-v2.sh --list-sounds
+~/.noisy-claude/noisy-claude.sh --list-sounds
 ```
 
 ### Play a Sound
 
 ```bash
-~/.quick-ping/quick-ping-v2.sh --play "sound.wav"
+~/.noisy-claude/noisy-claude.sh --play "sound.wav"
 ```
 
 Plays from the currently active collection.
@@ -139,7 +139,7 @@ No, only one collection is active at a time. But you can switch instantly!
 
 ### What happens to my event mappings when I switch?
 
-Your event-to-sound mappings are preserved. When you switch collections, quick-ping looks for those same sound filenames in the new collection. If a sound isn't found, that event won't play.
+Your event-to-sound mappings are preserved. When you switch collections, noisy-claude looks for those same sound filenames in the new collection. If a sound isn't found, that event won't play.
 
 ### Can I delete a collection?
 
@@ -147,7 +147,7 @@ Yes, but you can't delete the currently active collection. Switch to another col
 
 ### How do I rename a collection?
 
-Edit `~/.quick-ping/config.json` directly and change the `name` field.
+Edit `~/.noisy-claude/config.json` directly and change the `name` field.
 
 ### Can I have different mappings per collection?
 
@@ -155,7 +155,7 @@ Not currently. All collections share the same event mappings. You'd need to manu
 
 ### Where are collections stored?
 
-In `~/.quick-ping/config.json` under the `collections` key.
+In `~/.noisy-claude/config.json` under the `collections` key.
 
 ## Best Practices
 

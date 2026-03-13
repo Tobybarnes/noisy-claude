@@ -1,6 +1,6 @@
 # Collections System
 
-The Collections System allows you to manage multiple sound libraries in quick-ping and easily switch between them.
+The Collections System allows you to manage multiple sound libraries in noisy-claude and easily switch between them.
 
 ## Overview
 
@@ -18,7 +18,7 @@ Collections are stored in `config.json`:
   "collections": {
     "default": {
       "name": "Sims Sounds",
-      "path": "/Users/username/.quick-ping/sounds",
+      "path": "/Users/username/.noisy-claude/sounds",
       "description": "Original Sims game sounds"
     },
     "custom": {
@@ -35,7 +35,7 @@ Collections are stored in `config.json`:
 
 ### Switching Collections
 
-1. Open the Control Panel: `~/.quick-ping/launch-control-panel.sh`
+1. Open the Control Panel: `~/.noisy-claude/launch-control-panel.sh`
 2. In the header, find the "Collection" dropdown
 3. Select a different collection to switch
 4. All sounds will now be loaded from the new collection's folder
@@ -84,7 +84,7 @@ The algorithm looks for these keywords and their variations:
 ### Check Current Collection
 
 ```bash
-~/.quick-ping/quick-ping-v2.sh --status
+~/.noisy-claude/noisy-claude.sh --status
 ```
 
 Shows:
@@ -95,13 +95,13 @@ Shows:
 ### List Sounds from Active Collection
 
 ```bash
-~/.quick-ping/quick-ping-v2.sh --list-sounds
+~/.noisy-claude/noisy-claude.sh --list-sounds
 ```
 
 ### Play a Sound from Active Collection
 
 ```bash
-~/.quick-ping/quick-ping-v2.sh --play "sound-file.wav"
+~/.noisy-claude/noisy-claude.sh --play "sound-file.wav"
 ```
 
 ## API Endpoints
@@ -236,16 +236,16 @@ The system validates:
 
 - Collections are stored in `config.json`
 - The active collection path is resolved dynamically at runtime
-- All quick-ping scripts (v2.sh, agent-sound.sh) support collections
+- All noisy-claude scripts (noisy-claude.sh, agent-sound.sh) support collections
 - Sound paths are resolved from the active collection on each event
 - Switching collections does not require restarting Claude Code
 - The Control Panel automatically reloads sounds when switching
 
 ## Migration from v1.0
 
-If you're upgrading from quick-ping v1.0:
+If you're upgrading from noisy-claude v1.0:
 
-1. Your existing sounds in `~/.quick-ping/sounds` are automatically preserved
+1. Your existing sounds in `~/.noisy-claude/sounds` are automatically preserved
 2. A default collection is created pointing to this folder
 3. All your existing sound mappings remain unchanged
 4. You can now add additional collections as needed

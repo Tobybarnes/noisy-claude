@@ -9,10 +9,10 @@ PID_FILE="$QUICK_PING_DIR/.afplay.pid"
 
 case "${1:-}" in
   --version) echo "quick-ping v$VERSION"; exit 0 ;;
-  --help|-h) echo "quick-ping v$VERSION"; echo "Docs: https://quick-ping.quick.shopify.io/help.html"; exit 0 ;;
+  --help|-h) echo "quick-ping v$VERSION"; echo "Docs: https://github.com/Tobybarnes/noisy-claude"; exit 0 ;;
   --always) python3 -c "
 import json, os
-p = os.path.join(os.environ.get('QUICK_PING_DIR', os.path.expanduser('~/Documents/MyEP/projects/noisy-claude')), 'config.json')
+p = os.path.join(os.environ.get('QUICK_PING_DIR', os.path.expanduser('~/.noisy-claude')), 'config.json')
 with open(p) as f: c = json.load(f)
 c['focus_mode'] = 'always'
 with open(p,'w') as f: json.dump(c,f,indent=2); f.write('\\n')
@@ -20,7 +20,7 @@ print('Focus mode: always')
 "; exit 0 ;;
   --smart) python3 -c "
 import json, os
-p = os.path.join(os.environ.get('QUICK_PING_DIR', os.path.expanduser('~/Documents/MyEP/projects/noisy-claude')), 'config.json')
+p = os.path.join(os.environ.get('QUICK_PING_DIR', os.path.expanduser('~/.noisy-claude')), 'config.json')
 with open(p) as f: c = json.load(f)
 c['focus_mode'] = 'smart'
 with open(p,'w') as f: json.dump(c,f,indent=2); f.write('\\n')
@@ -28,7 +28,7 @@ print('Focus mode: smart')
 "; exit 0 ;;
   --status) python3 -c "
 import json, os
-p = os.path.join(os.environ.get('QUICK_PING_DIR', os.path.expanduser('~/Documents/MyEP/projects/noisy-claude')), 'config.json')
+p = os.path.join(os.environ.get('QUICK_PING_DIR', os.path.expanduser('~/.noisy-claude')), 'config.json')
 with open(p) as f: c = json.load(f)
 m = c.get('focus_mode','smart')
 print(f'quick-ping v${VERSION}')

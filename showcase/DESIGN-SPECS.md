@@ -1,4 +1,4 @@
-# Quick-Ping Showcase Site -- Design Specifications
+# Noisy Claude Showcase Site -- Design Specifications
 
 **Version**: 2.0
 **Date**: 2026-02-13
@@ -42,7 +42,7 @@ Think of the showcase site like Spotify showcasing different playlists. The play
 
 ### Key Principle
 
-The site should feel like a **neutral instrument** that plays two very different records. A visitor should be able to imagine ANY collection working in Quick-Ping, not just these two.
+The site should feel like a **neutral instrument** that plays two very different records. A visitor should be able to imagine ANY collection working in Noisy Claude, not just these two.
 
 ---
 
@@ -725,7 +725,7 @@ The Sims card should feel noticeably different from MGS. Slightly lighter backgr
 | Event name color | `#00FF41` (terminal green) | `#00D4AA` (teal) |
 | Mood | Dense, tactical, serious | Lighter, warmer, playful |
 
-These two cards placed side-by-side should make the dual-personality of Quick-Ping immediately obvious.
+These two cards placed side-by-side should make the dual-personality of Noisy Claude immediately obvious.
 
 ### 3.5 Badge / Tag
 
@@ -862,7 +862,7 @@ Horizontal row of key metrics. Always neutral.
 
 ### 3.8 Event Channel Strip
 
-For the Event Map section. Neutral styling -- events belong to Quick-Ping, not a specific collection.
+For the Event Map section. Neutral styling -- events belong to Noisy Claude, not a specific collection.
 
 ```css
 .channel-strip {
@@ -1202,7 +1202,7 @@ The section header uses a white LED and neutral label color. The cards themselve
 
 **Theme: NEUTRAL framework, showcasing BOTH collection themes.**
 
-The control panel section demonstrates that Quick-Ping is more than sound swapping -- the entire UI adapts to match the active collection's aesthetic. This section shows two side-by-side mockups: the MGS dark theme and the Sims light theme.
+The control panel section demonstrates that Noisy Claude is more than sound swapping -- the entire UI adapts to match the active collection's aesthetic. This section shows two side-by-side mockups: the MGS dark theme and the Sims light theme.
 
 **Key message:** "Switch collections, and the entire interface transforms. Not just the sounds -- the whole experience."
 
@@ -1217,7 +1217,7 @@ The control panel section demonstrates that Quick-Ping is more than sound swappi
 |                                                                |
 |  +--MGS THEME (dark mock)--+  +--SIMS THEME (light mock)-+   |
 |  | [dark bg #1A1A1A]       |  | [light bg #F5F5F0]       |   |
-|  | QUICK-PING 2  [PWR][*]  |  | QUICK-PING 2   [PWR][*]  |   |
+|  | NOISY CLAUDE  [PWR][*]  |  | NOISY CLAUDE   [PWR][*]  |   |
 |  | [green LED strip]       |  | [teal LED strip]          |   |
 |  |                         |  |                            |   |
 |  | SESSION START     [*]   |  | SESSION START     [*]     |   |
@@ -1342,7 +1342,7 @@ The control panel section demonstrates that Quick-Ping is more than sound swappi
 **Simplified Mockup Elements (inside each frame):**
 
 Each frame contains a CSS-only simplified version of the control panel showing:
-1. Header with "QUICK-PING 2" title
+1. Header with "NOISY CLAUDE" title
 2. A mini event card with LED strip, event name, toggle, and sound select
 3. A primary button in the theme's accent color
 4. Appropriate LED colors and text contrast
@@ -1495,7 +1495,7 @@ Uses the `.badge` component from Section 3.5.
 
 ### 4.4 EVENT MAP -- "40+ Events. Every Moment Covered."
 
-**Theme: NEUTRAL. Events belong to Quick-Ping, not a collection.**
+**Theme: NEUTRAL. Events belong to Noisy Claude, not a collection.**
 
 Same layout as v1 but with neutral (white) LEDs and neutral event name colors.
 
@@ -1556,7 +1556,7 @@ Tech badges: PYTHON FLASK, VANILLA JS, REST API, macOS, ZERO DEPENDENCIES -- all
 |  ||  | $ git clone https://github.com/user/qp2.git  [CP]|||   |
 |  ||  +--------------------------------------------------+||   |
 |  ||                                                      ||   |
-|  ||          [GET QUICK-PING]     [VIEW ON GITHUB]       ||   |
+|  ||          [GET NOISY CLAUDE]     [VIEW ON GITHUB]       ||   |
 |  ||                                                      ||   |
 |  ||  Free. Open source. Two sound packs included.        ||   |
 |  ||                                                      ||   |
@@ -2034,7 +2034,7 @@ Note: Tertiary text (`rgba(255,255,255,0.40)`) passes AA only for large text. Us
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quick-Ping -- Sound Notifications for Claude Code</title>
+  <title>Noisy Claude -- Sound Notifications for Claude Code</title>
   <meta name="description" content="...">
 </head>
 <body>
@@ -2121,12 +2121,12 @@ Note: Tertiary text (`rgba(255,255,255,0.40)`) passes AA only for large text. Us
 ### 8.2 Meta Tags
 
 ```html
-<meta name="description" content="Quick-Ping: Sound notifications for Claude Code. 124 Metal Gear Solid sounds and 140+ Sims 2 sounds. Every commit, test, and context warning gets its own sound.">
-<meta property="og:title" content="Quick-Ping -- Your Terminal Has a Soundtrack Now">
+<meta name="description" content="Noisy Claude: Sound notifications for Claude Code. 124 Metal Gear Solid sounds and 140+ Sims 2 sounds. Every commit, test, and context warning gets its own sound.">
+<meta property="og:title" content="Noisy Claude -- Your Terminal Has a Soundtrack Now">
 <meta property="og:description" content="Sound notifications for Claude Code. 124 Metal Gear Solid sounds and 140+ Sims 2 sounds.">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Quick-Ping -- Your Terminal Has a Soundtrack Now">
+<meta name="twitter:title" content="Noisy Claude -- Your Terminal Has a Soundtrack Now">
 <meta name="twitter:description" content="Your Claude Code sessions just got a soundtrack. Metal Gear Solid alert sounds for context warnings. Simlish celebrations for passing tests. Free and open source.">
 ```
 
@@ -2237,7 +2237,7 @@ Note: Tertiary text (`rgba(255,255,255,0.40)`) passes AA only for large text. Us
 |  ||                                                   ||    |
 |  ||  $ git clone ...    (neutral gray code text) [CP] ||    |
 |  ||                                                   ||    |
-|  ||  [GET QUICK-PING (white)]  [VIEW ON GITHUB]      ||    |
+|  ||  [GET NOISY CLAUDE (white)]  [VIEW ON GITHUB]      ||    |
 |  ||                                                   ||    |
 |  ||  Free. Open source. Two sound packs included.     ||    |
 |  ||  Because coding in silence was always the         ||    |
@@ -2246,7 +2246,7 @@ Note: Tertiary text (`rgba(255,255,255,0.40)`) passes AA only for large text. Us
 |                                                             |
 |------- neutral 1px border ----------------------------------|
 |                                                             |
-|  QUICK-PING    MIT License    2026                          |
+|  NOISY CLAUDE    MIT License    2026                        |
 |  Built for developers who alt-tab.                          |
 |                                                             |
 +=============================================================+

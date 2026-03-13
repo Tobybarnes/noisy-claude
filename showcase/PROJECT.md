@@ -1,15 +1,15 @@
-# Quick-Ping Showcase Site -- Project Brief
+# Noisy Claude Showcase Site -- Project Brief
 
 ## What This Is
 
-A standalone single-page showcase website for Quick-Ping v2.0 -- a sound notification system for Claude Code. Code name: "The Player." The showcase site lives separately from the main Quick-Ping repo and serves as the public face of the project.
+A standalone single-page showcase website for Noisy Claude -- a sound notification system for Claude Code. Code name: "The Player." The showcase site lives separately from the main Noisy Claude repo and serves as the public face of the project.
 
 ## Goals
 
-1. **Sell the experience** -- Make developers want to install Quick-Ping within 10 seconds of landing on the page
+1. **Sell the experience** -- Make developers want to install Noisy Claude within 10 seconds of landing on the page
 2. **Demo the contrast** -- Show two completely different sound experiences (MGS and Sims 2) and let the visitor choose their vibe
 3. **Drive installation** -- Clear, frictionless path from "cool" to "installed and running"
-4. **Establish brand** -- Position Quick-Ping as a neutral instrument that plays two very different records
+4. **Establish brand** -- Position Noisy Claude as a neutral instrument that plays two very different records
 
 ## Target Audience
 
@@ -17,9 +17,9 @@ A standalone single-page showcase website for Quick-Ping v2.0 -- a sound notific
 - **Secondary**: Developer tooling enthusiasts, retro gaming fans, people who like tasteful UI
 - **Tertiary**: Anyone curious about AI-assisted development workflows
 
-## What Quick-Ping Actually Does
+## What Noisy Claude Actually Does
 
-Quick-Ping hooks into Claude Code's event system (PreToolUse, PostToolUse, Stop) and plays sound effects for 40+ events: git commits, test results, context warnings, streaks, and more. It ships with two collections:
+Noisy Claude hooks into Claude Code's event system (PreToolUse, PostToolUse, Stop) and plays sound effects for 40+ events: git commits, test results, context warnings, streaks, and more. It ships with two collections:
 
 - **MGS Collection** (124 sounds) -- Tactical Espionage Audio. Coding sessions become stealth missions. Codec rings, radar blips, the "!" alert at 90% context.
 - **Sims 2 Collection** (140+ sounds) -- Simlish exclamations for every coding occasion. Warm, cheerful, chaotic.
@@ -114,4 +114,4 @@ Full design specs: `showcase/DESIGN-SPECS.md`
 |---------|------|---------------|
 | Control Panel adaptive theming | #11 | `control-panel.html` (CSS themes via `body.theme-mgs` / `body.theme-sims`) |
 | Sound description labels | #12 | `config.json` (`sound_label` on 76 events), `control-panel.html` |
-| Master power switch | #13/#14 | `config.json` (`master_enabled`), `quick-ping-v2.sh` (`--mute`/`--unmute`), `control-panel.html` |
+| Master power switch | #13/#14 | `config.json` (`master_enabled`), `noisy-claude.sh` (`--mute`/`--unmute`), `control-panel.html` |

@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# Launch the Quick-Ping Control Panel
+# Launch the Noisy Claude Control Panel
 
 set -euo pipefail
 
-QUICK_PING_DIR="$HOME/Documents/MyEP/Projects/noisy-claude"
+NOISY_CLAUDE_DIR="$HOME/.noisy-claude"
 
-echo "🔊 Quick-Ping Control Panel Launcher"
+echo "🔊 Noisy Claude Control Panel Launcher"
 echo ""
 
 # Check for Python 3
@@ -26,5 +26,5 @@ echo "✅ Dependencies ready"
 echo ""
 
 # Start the server
-cd "$QUICK_PING_DIR"
+cd "$NOISY_CLAUDE_DIR"
 python3 control-panel-server.py

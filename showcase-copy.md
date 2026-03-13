@@ -1,4 +1,4 @@
-# Quick-Ping Showcase Website Copy (v2 -- Neutral Framework)
+# Noisy Claude Showcase Website Copy (v2 -- Neutral Framework)
 
 > **Design intent:** The site itself is neutral -- clean, modern, developer-tool aesthetic.
 > Each collection gets its own visually distinct section that expresses its unique character.
@@ -32,7 +32,7 @@ You kicked off a Claude Code session. You switched to Slack. Or Figma. Or your p
 
 That's dead time. Every day.
 
-Quick-Ping closes the loop. When Claude commits, you hear it. When tests fail, you hear it. When context hits 90% and your session is about to compress -- you *definitely* hear it.
+Noisy Claude closes the loop. When Claude commits, you hear it. When tests fail, you hear it. When context hits 90% and your session is about to compress -- you *definitely* hear it.
 
 No browser tabs. No menubar widgets. No polling. Just sound.
 
@@ -44,7 +44,7 @@ No browser tabs. No menubar widgets. No polling. Just sound.
 **Two vibes. Pick yours.**
 
 ### Body
-Quick-Ping ships with two built-in sound collections. Each one transforms your entire experience -- the sounds, the UI, the feel of your coding session. Switch between them in one click. No reconfiguration.
+Noisy Claude ships with two built-in sound collections. Each one transforms your entire experience -- the sounds, the UI, the feel of your coding session. Switch between them in one click. No reconfiguration.
 
 Same events. Same control panel. Completely different world.
 
@@ -158,7 +158,7 @@ Session ends? A warm goodbye. "Buh bye!" The household is at peace.
 - The collection that started it all
 
 ### Closing
-The original Quick-Ping collection. Warm, chaotic, and endlessly entertaining. Every sound is a genuine Simlish exclamation -- no two reactions are quite the same.
+The original Noisy Claude collection. Warm, chaotic, and endlessly entertaining. Every sound is a genuine Simlish exclamation -- no two reactions are quite the same.
 
 If MGS turns coding into a mission, Sims turns it into a life well lived.
 
@@ -257,7 +257,7 @@ Skeuomorphic hardware power switch in the control panel header. Visually distinc
 **Headline:** Any folder. Any sounds. One scan.
 
 **Body:**
-Point Quick-Ping at any folder of audio files. Click "Scan Folder." Click "Claude Suggests Mappings." Save. Done.
+Point Noisy Claude at any folder of audio files. Click "Scan Folder." Click "Claude Suggests Mappings." Save. Done.
 
 WAV, MP3, AIFF, M4A. Your sounds, your vibe, your rules.
 
@@ -269,7 +269,7 @@ WAV, MP3, AIFF, M4A. Your sounds, your vibe, your rules.
 **40+ events. 10 categories. Full coverage.**
 
 ### Body
-Quick-Ping listens for everything Claude Code does and maps it to sound.
+Noisy Claude listens for everything Claude Code does and maps it to sound.
 
 | Category | What it covers |
 |----------|---------------|
@@ -295,13 +295,13 @@ Enable what matters. Disable the noise. Every event is independently toggleable.
 
 ### Step 1: Clone and install
 ```
-git clone https://github.com/Tobybarnes-Shop/Ping2.git
+git clone https://github.com/Tobybarnes/noisy-claude.git
 pip3 install flask flask-cors
 ```
 Pure Python + vanilla JS. No build step. No node_modules. No webpack.
 
 ### Step 2: Hook into Claude Code
-Add Quick-Ping to your Claude Code hooks in `~/.claude/settings.json`. One config block, three hook points (PreToolUse, PostToolUse, Stop). Copy, paste, done.
+Add Noisy Claude to your Claude Code hooks in `~/.claude/settings.json`. One config block, three hook points (PreToolUse, PostToolUse, Stop). Copy, paste, done.
 
 ### Step 3: Launch and pick a vibe
 ```
@@ -319,7 +319,7 @@ macOS (uses afplay), Python 3, Flask. That's it.
 ### Primary CTA (end of page, neutral)
 **Headline:** Your terminal is too quiet.
 
-**Button text:** Get Quick-Ping
+**Button text:** Get Noisy Claude
 
 **Sub-text:** Free. Open source. Two sound packs included.
 
@@ -381,7 +381,7 @@ Built for developers who alt-tab. Powered by nostalgia.
 ## 12. SOCIAL / SHARING COPY
 
 ### Open Graph title
-Quick-Ping -- Your code has a soundtrack now.
+Noisy Claude -- Your code has a soundtrack now.
 
 ### Open Graph description
 Sound notifications for Claude Code. Ships with Metal Gear Solid and Sims 2 sound collections -- and the entire UI adapts to match. Every commit, test, and context warning gets its own sound. Free and open source.
@@ -422,7 +422,7 @@ Short sentences. Fragments are fine. Let the copy breathe. One idea per line whe
 Drop specific numbers (124 sounds, 140+ sounds, 40+ events, 8-bit mono WAV, PS1 era, localhost:5050). Developers trust specifics over adjectives.
 
 ### The contrast is the feature
-The most compelling thing about Quick-Ping is that switching collections transforms *everything* -- not just the sounds, but the entire UI. The control panel goes from dark tactical steel to bright playful Sims aesthetic. The site should make that contrast visceral. Show the theme switch. Make it the centerpiece demo. Same tool, wildly different world.
+The most compelling thing about Noisy Claude is that switching collections transforms *everything* -- not just the sounds, but the entire UI. The control panel goes from dark tactical steel to bright playful Sims aesthetic. The site should make that contrast visceral. Show the theme switch. Make it the centerpiece demo. Same tool, wildly different world.
 
 ### What to avoid
 - "Revolutionary" / "game-changing" / "leverage" / "unlock"

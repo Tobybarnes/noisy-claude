@@ -1,8 +1,8 @@
-# Quick-Ping v2 -- Showcase Website Creative Brief
+# Noisy Claude -- Showcase Website Creative Brief
 
 ## Project Overview
 
-**Product**: Quick-Ping v2 -- Sound notifications for Claude Code
+**Product**: Noisy Claude -- Sound notifications for Claude Code
 **Deliverable**: A single-page showcase website that sells the experience of coding with game audio feedback
 **Audience**: Developers who grew up on gaming and want their terminal to feel alive
 **Goal**: Show two completely different sound experiences and let the visitor choose their vibe
@@ -13,7 +13,7 @@
 
 **"Your terminal has a soundtrack now."**
 
-Quick-Ping turns every Claude Code session into a game. Git commits trigger sounds. Test failures trigger different sounds. Context warnings escalate. The showcase site should make this *feel* inevitable -- like of course your terminal should have audio feedback.
+Noisy Claude turns every Claude Code session into a game. Git commits trigger sounds. Test failures trigger different sounds. Context warnings escalate. The showcase site should make this *feel* inevitable -- like of course your terminal should have audio feedback.
 
 The site does not sell a utility. It sells a vibe -- or rather, two vibes. The MGS collection turns your session into a stealth operation. The Sims collection turns it into a cheerful household. The site must celebrate both equally, letting each collection express its own character within a neutral frame.
 
@@ -30,7 +30,7 @@ The hero, navigation, control panel, event map, installation, and CTA sections a
 - Vercel homepage -- clean dark mode, code-first hero, sharp typography
 - Linear landing page -- smooth scroll sections, understated confidence
 - Raycast -- product screenshots floating in space, keyboard-first appeal
-- The existing Quick-Ping control panel -- dark steel, green LEDs, IBM Plex Mono
+- The existing Noisy Claude control panel -- dark steel, green LEDs, IBM Plex Mono
 
 ### The MGS World (dark, tactical, tense)
 When the visitor scrolls into the MGS section, the entire visual environment shifts. The background darkens. Amber light bleeds in. The typography tightens. The content reads like a mission briefing. This is a self-contained world within the page.
@@ -147,7 +147,7 @@ Every accent color gets a corresponding glow for LED/indicator moments:
 ## Key Messaging Pillars
 
 ### Pillar 1: "Your Terminal Has a Soundtrack"
-The headline promise. Coding is silent by default. Quick-Ping changes that. Every event becomes a moment. Every session has an arc.
+The headline promise. Coding is silent by default. Noisy Claude changes that. Every event becomes a moment. Every session has an arc.
 
 **Supporting messages:**
 - "40+ events. 2 built-in collections. Your session, your soundtrack."
@@ -189,8 +189,8 @@ A single-page scroll. The neutral frame holds the product story. The collection 
 - Full-viewport, clean dark background
 - "YOUR CODE HAS A SOUNDTRACK NOW" in display type
 - Tagline mentioning both collections equally
-- Green LED pulse -- the universal "Quick-Ping is on" signal
-- Two CTAs: "Get Quick-Ping" (primary green) and "See the collections" (ghost)
+- Green LED pulse -- the universal "Noisy Claude is on" signal
+- Two CTAs: "Get Noisy Claude" (primary green) and "See the collections" (ghost)
 
 ### Section 2: THE GAP (Neutral Frame)
 - Problem statement: "You're not watching your terminal"
@@ -274,7 +274,7 @@ A single-page scroll. The neutral frame holds the product story. The collection 
 ## Visual Motifs
 
 ### The LED
-A small, glowing green circle. Appears in the hero, next to section headings, and as toggle indicators. It is the universal "Quick-Ping is on" signal. The LED should have:
+A small, glowing green circle. Appears in the hero, next to section headings, and as toggle indicators. It is the universal "Noisy Claude is on" signal. The LED should have:
 - Solid `#00FF41` fill
 - Soft glow shadow: `0 0 8px rgba(0, 255, 65, 0.5)`
 - Optional steel bezel ring: 2px `#4A4A4A` outline with 1px gap
@@ -302,7 +302,7 @@ Section dividers and emphasis use a 2-4px left border in the accent color. Like 
 - Short paragraphs. 2-3 sentences maximum.
 - Headlines are 3-7 words. All uppercase.
 - Body copy is sentence case. Professional register.
-- Code examples use actual Quick-Ping commands and config.
+- Code examples use actual Noisy Claude commands and config.
 - Never use "powerful", "robust", "seamless", or "cutting-edge."
 - Never use exclamation marks in headlines.
 - Use em-dashes for asides. Not parentheses.
@@ -320,7 +320,7 @@ Section dividers and emphasis use a 2-4px left border in the accent color. Like 
 
 ## Deliverable Specifications
 
-- **Format**: Single HTML file with inline CSS and minimal JS (no build step, matching Quick-Ping's own architecture)
+- **Format**: Single HTML file with inline CSS and minimal JS (no build step, matching Noisy Claude's own architecture)
 - **Fonts**: Google Fonts link for IBM Plex Mono (400, 500, 700)
 - **Images**: None required. All visual elements are CSS-generated (LEDs, borders, grids, gradients)
 - **JS**: Scroll reveal animations, code copy button, smooth scroll anchors. No framework.
@@ -331,7 +331,7 @@ Section dividers and emphasis use a 2-4px left border in the accent color. Like 
 
 ## Summary
 
-The Quick-Ping showcase site is a neutral, confident frame that hosts two vivid collection worlds. The base site looks like a modern developer tool (Vercel, Linear). The MGS section plunges into dark amber tactical tension. The Sims section opens into warm teal playfulness. The contrast between these worlds is the site's signature moment -- the visitor sees that Quick-Ping is not one vibe but a choice between completely different experiences.
+The Noisy Claude showcase site is a neutral, confident frame that hosts two vivid collection worlds. The base site looks like a modern developer tool (Vercel, Linear). The MGS section plunges into dark amber tactical tension. The Sims section opens into warm teal playfulness. The contrast between these worlds is the site's signature moment -- the visitor sees that Noisy Claude is not one vibe but a choice between completely different experiences.
 
 The design uses sharp corners, green LEDs, and IBM Plex Mono for the neutral frame. Collection sections break from the frame with their own color environments. The copy is confident, dry, and developer-native. No gimmicks. No sound on the page. Just a beautifully presented argument that your terminal should not be silent -- and that you should get to choose what it sounds like.
 

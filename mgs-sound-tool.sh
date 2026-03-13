@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 # mgs-sound-tool.sh — Interactive MGS sound mapping toolkit
-# Plays, analyzes, tags, and maps MGS sounds for quick-ping events
+# Plays, analyzes, tags, and maps MGS sounds for noisy-claude events
 set -euo pipefail
 
-QUICK_PING_DIR="${QUICK_PING_DIR:-$HOME/Documents/MyEP/Projects/noisy-claude}"
-MGS_DIR="$QUICK_PING_DIR/sounds/MGS"
-CONFIG_FILE="$QUICK_PING_DIR/config.json"
-TAGS_FILE="$QUICK_PING_DIR/.state/mgs-tags.json"
-ANALYSIS_FILE="$QUICK_PING_DIR/.state/mgs-analysis.json"
+NOISY_CLAUDE_DIR="${NOISY_CLAUDE_DIR:-$HOME/.noisy-claude}"
+MGS_DIR="$NOISY_CLAUDE_DIR/sounds/MGS"
+CONFIG_FILE="$NOISY_CLAUDE_DIR/config.json"
+TAGS_FILE="$NOISY_CLAUDE_DIR/.state/mgs-tags.json"
+ANALYSIS_FILE="$NOISY_CLAUDE_DIR/.state/mgs-analysis.json"
 
-mkdir -p "$QUICK_PING_DIR/.state"
+mkdir -p "$NOISY_CLAUDE_DIR/.state"
 
 # Colors
 RED='\033[0;31m'
@@ -31,8 +31,8 @@ usage() {
     echo "  play <file>          Play a single sound file"
     echo "  tag <file> <tag>     Tag a sound with a category (alert/success/fail/ambient/ui/codec/effect)"
     echo "  tags                 Show all tagged sounds"
-    echo "  events               List all quick-ping events and current mappings"
-    echo "  map <event> <file>   Map a sound file to a quick-ping event"
+    echo "  events               List all noisy-claude events and current mappings"
+    echo "  map <event> <file>   Map a sound file to a noisy-claude event"
     echo "  apply                Apply all pending mappings to config.json"
     echo "  test <event>         Test a mapped event by playing its sound"
     echo "  batch-play <files..> Play multiple files in sequence"
@@ -398,7 +398,7 @@ import json
 with open('$CONFIG_FILE') as f: config = json.load(f)
 events = config.get('events', {})
 
-print('Quick-Ping Events and Current MGS Mappings:')
+print('Noisy Claude Events and Current MGS Mappings:')
 print('')
 for name in sorted(events):
     e = events[name]
@@ -415,7 +415,7 @@ cmd_map() {
     local event="${1:?Usage: mgs-sound-tool.sh map <event> <file>}"
     local file="${2:?Provide a sound file}"
 
-    local mappings_file="$QUICK_PING_DIR/.state/mgs-mappings.json"
+    local mappings_file="$NOISY_CLAUDE_DIR/.state/mgs-mappings.json"
 
     python3 -c "
 import json, os
@@ -436,7 +436,7 @@ print('Run \"apply\" to write mappings to config.json')
 
 # Apply staged mappings to config.json
 cmd_apply() {
-    local mappings_file="$QUICK_PING_DIR/.state/mgs-mappings.json"
+    local mappings_file="$NOISY_CLAUDE_DIR/.state/mgs-mappings.json"
 
     if [ ! -f "$mappings_file" ]; then
         echo -e "${RED}No staged mappings found. Use 'map' to create mappings first.${NC}"

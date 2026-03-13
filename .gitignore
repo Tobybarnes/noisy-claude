@@ -28,7 +28,7 @@ env/
 *.swo
 *~
 
-# Quick-Ping specific
+# Noisy Claude specific
 config.json.backup
 *.output
 config.json.bak

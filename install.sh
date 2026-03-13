@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Quick-Ping 2 Installer
+# Noisy Claude Installer
 # One-line installation for macOS
 
 set -e
 
-echo "🎚️  Quick-Ping 2 Installer"
+echo "🎚️  Noisy Claude Installer"
 echo ""
 
 # Check for macOS
@@ -21,13 +21,13 @@ if ! command -v python3 &> /dev/null; then
 fi
 
 # Installation directory
-INSTALL_DIR="$HOME/Documents/MyEP/Projects/noisy-claude"
+INSTALL_DIR="$HOME/.noisy-claude"
 
 echo "📁 Installing to: $INSTALL_DIR"
 echo ""
 
 # Create directory structure
-mkdir -p "$HOME/Documents/MyEP/Projects"
+mkdir -p "$HOME/.noisy-claude"
 
 # Clone or download
 if [ -d "$INSTALL_DIR" ]; then
@@ -36,7 +36,7 @@ if [ -d "$INSTALL_DIR" ]; then
     git pull origin main || echo "Not a git repo, skipping update"
 else
     echo "📥 Cloning from GitHub..."
-    git clone https://github.com/Tobybarnes-Shop/Ping2.git "$INSTALL_DIR"
+    git clone https://github.com/Tobybarnes/noisy-claude.git "$INSTALL_DIR"
     cd "$INSTALL_DIR"
 fi
 
@@ -48,6 +48,28 @@ pip3 install flask flask-cors --quiet || pip3 install --user flask flask-cors --
 # Make scripts executable
 chmod +x *.sh 2>/dev/null || true
 
+# Rewrite sound paths in config.json to match this machine's install dir
+echo ""
+echo "🔧 Configuring sound paths..."
+python3 - "$INSTALL_DIR" << 'PYEOF'
+import sys, json, re
+from pathlib import Path
+
+install_dir = sys.argv[1]
+config_path = Path(install_dir) / 'config.json'
+
+if config_path.exists():
+    with open(config_path) as f:
+        content = f.read()
+    # Replace any absolute sounds path with the current install dir
+    content = re.sub(r'"path": ".*?/sounds/', f'"path": "{install_dir}/sounds/', content)
+    with open(config_path, 'w') as f:
+        f.write(content)
+    print(f"   Sound paths updated to {install_dir}/sounds/")
+else:
+    print("   config.json not found, skipping")
+PYEOF
+
 # Check if Claude Code hooks need updating
 CLAUDE_SETTINGS="$HOME/.claude/settings.json"
 
@@ -56,7 +78,7 @@ if [ -f "$CLAUDE_SETTINGS" ]; then
     echo "🔧 Claude Code detected!"
 
     # Check if hooks already configured
-    if grep -q "quick-ping" "$CLAUDE_SETTINGS"; then
+    if grep -q "noisy-claude" "$CLAUDE_SETTINGS"; then
         echo "   Hooks already configured ✓"
     else
         echo ""
@@ -69,7 +91,7 @@ if [ -f "$CLAUDE_SETTINGS" ]; then
       "matcher": ".*",
       "hooks": [{
         "type": "command",
-        "command": "~/Documents/MyEP/projects/noisy-claude/quick-ping-v2.sh",
+        "command": "~/.noisy-claude/noisy-claude.sh",
         "async": true,
         "timeout": 5
       }]
@@ -78,7 +100,7 @@ if [ -f "$CLAUDE_SETTINGS" ]; then
       "matcher": ".*",
       "hooks": [{
         "type": "command",
-        "command": "~/Documents/MyEP/projects/noisy-claude/quick-ping-v2.sh",
+        "command": "~/.noisy-claude/noisy-claude.sh",
         "async": true,
         "timeout": 5
       }]
@@ -86,7 +108,7 @@ if [ -f "$CLAUDE_SETTINGS" ]; then
     "Stop": [{
       "hooks": [{
         "type": "command",
-        "command": "~/Documents/MyEP/projects/noisy-claude/quick-ping-v2.sh",
+        "command": "~/.noisy-claude/noisy-claude.sh",
         "async": true,
         "timeout": 5
       }]
@@ -107,7 +129,7 @@ echo ""
 echo "🚀 Next steps:"
 echo ""
 echo "   1. Launch control panel:"
-echo "      ~/Documents/MyEP/projects/noisy-claude/launch-control-panel.sh"
+echo "      ~/.noisy-claude/launch-control-panel.sh"
 echo ""
 echo "   2. Open in browser:"
 echo "      http://localhost:5050"
@@ -115,5 +137,5 @@ echo ""
 echo "   3. Configure your sound events!"
 echo ""
 echo "📚 Documentation: $INSTALL_DIR/README.md"
-echo "🌐 GitHub: https://github.com/Tobybarnes-Shop/Ping2"
+echo "🌐 GitHub: https://github.com/Tobybarnes/noisy-claude"
 echo ""

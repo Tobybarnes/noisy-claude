@@ -2,11 +2,11 @@
 
 ## Overview
 
-Successfully implemented a complete Collections System for quick-ping that allows users to manage multiple sound libraries and switch between them seamlessly.
+Successfully implemented a complete Collections System for noisy-claude that allows users to manage multiple sound libraries and switch between them seamlessly.
 
 ## Files Modified
 
-### 1. `/Users/tobybarnes_shop/.quick-ping/config.json`
+### 1. `/Users/tobybarnes_shop/.noisy-claude/config.json`
 **Changes:**
 - Updated structure to version 2.0
 - Added `active_collection` field
@@ -22,7 +22,7 @@ Successfully implemented a complete Collections System for quick-ping that allow
   "collections": {
     "default": {
       "name": "Sims Sounds",
-      "path": "/Users/tobybarnes_shop/.quick-ping/sounds",
+      "path": "/Users/tobybarnes_shop/.noisy-claude/sounds",
       "description": "Original Sims game sounds"
     }
   },
@@ -30,7 +30,7 @@ Successfully implemented a complete Collections System for quick-ping that allow
 }
 ```
 
-### 2. `/Users/tobybarnes_shop/.quick-ping/control-panel-server.py`
+### 2. `/Users/tobybarnes_shop/.noisy-claude/control-panel-server.py`
 **Changes:**
 - Updated `get_sounds()` to read from active collection path
 - Updated `play_sound()` to use active collection path
@@ -55,7 +55,7 @@ Successfully implemented a complete Collections System for quick-ping that allow
 - Prevents duplicate event assignments
 - Returns top match per filename
 
-### 3. `/Users/tobybarnes_shop/.quick-ping/control-panel.html`
+### 3. `/Users/tobybarnes_shop/.noisy-claude/control-panel.html`
 **Changes:**
 - Added collections dropdown selector in header
 - Added "Add Collection" button
@@ -84,7 +84,7 @@ Successfully implemented a complete Collections System for quick-ping that allow
 - `saveCollection()` - Save new collection and apply mappings
 - `switchCollection()` - Switch to different collection
 
-### 4. `/Users/tobybarnes_shop/.quick-ping/agent-sound.sh`
+### 4. `/Users/tobybarnes_shop/.noisy-claude/agent-sound.sh`
 **Changes:**
 - Added `read_config()` function to read both focus mode and collection path
 - Updated to read active collection from config
@@ -96,7 +96,7 @@ Successfully implemented a complete Collections System for quick-ping that allow
 - Falls back to default path if parsing fails
 - Reads both focus mode and sounds directory in one call for efficiency
 
-### 5. `/Users/tobybarnes_shop/.quick-ping/quick-ping-v2.sh`
+### 5. `/Users/tobybarnes_shop/.noisy-claude/noisy-claude.sh`
 **Changes:**
 - Updated `--list-sounds` to list from active collection
 - Updated `--play` to play from active collection
@@ -111,7 +111,7 @@ Successfully implemented a complete Collections System for quick-ping that allow
 
 ## Files Created
 
-### 1. `/Users/tobybarnes_shop/.quick-ping/COLLECTIONS.md`
+### 1. `/Users/tobybarnes_shop/.noisy-claude/COLLECTIONS.md`
 Complete user documentation including:
 - Overview and configuration structure
 - Control Panel usage instructions
@@ -126,7 +126,7 @@ Complete user documentation including:
 - Troubleshooting
 - Example workflow
 
-### 2. `/Users/tobybarnes_shop/.quick-ping/IMPLEMENTATION_SUMMARY.md`
+### 2. `/Users/tobybarnes_shop/.noisy-claude/IMPLEMENTATION_SUMMARY.md`
 This file - technical implementation summary.
 
 ## Features Implemented
@@ -152,7 +152,7 @@ This file - technical implementation summary.
 ### Integration
 - ✅ Backend API fully integrated
 - ✅ Frontend UI fully integrated
-- ✅ Shell scripts updated (quick-ping-v2.sh, agent-sound.sh)
+- ✅ Shell scripts updated (noisy-claude.sh, agent-sound.sh)
 - ✅ Config structure backward compatible
 - ✅ Default collection auto-created
 
@@ -415,6 +415,6 @@ The Collections System is fully implemented and ready for use. Users can now:
 2. Switch between them instantly
 3. Get AI-suggested mappings
 4. Scan any folder for sounds
-5. Theme their quick-ping experience
+5. Theme their noisy-claude experience
 
 All features work end-to-end from UI to API to shell scripts. The implementation maintains backward compatibility while adding powerful new functionality.

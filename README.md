@@ -1,4 +1,4 @@
-# Quick-Ping v2.0
+# Noisy Claude v2.0
 
 Sound notifications for Claude Code. Every tool call, git commit, test result, and context warning gets its own sound. Switch between sound collections to match your mood.
 
@@ -6,17 +6,17 @@ Sound notifications for Claude Code. Every tool call, git commit, test result, a
 
 ```bash
 # Launch the control panel
-~/Documents/MyEP/Projects/quick-ping-2/quick-ping-v2.sh --control-panel
+~/.noisy-claude/noisy-claude.sh --control-panel
 
 # Or use the launcher directly
-~/Documents/MyEP/Projects/quick-ping-2/launch-control-panel.sh
+~/.noisy-claude/launch-control-panel.sh
 ```
 
 Then open **http://localhost:5050** in your browser.
 
 ## Sound Collections
 
-Quick-Ping ships with two built-in collections. Switch between them in the Control Panel dropdown or by setting `"active_collection"` in `config.json`.
+Noisy Claude ships with two built-in collections. Switch between them in the Control Panel dropdown or by setting `"active_collection"` in `config.json`.
 
 ---
 
@@ -66,7 +66,7 @@ All sounds are 8-bit mono WAV from the PS1 era. The lo-fi character is a feature
 # Or use the Control Panel dropdown
 
 # Preview the alert sound
-quick-ping-v2.sh --play 0x01.wav
+noisy-claude.sh --play 0x01.wav
 ```
 
 ---
@@ -130,28 +130,28 @@ Click "Claude Suggests" for smart, opinionated defaults:
 
 ```bash
 # Launch control panel
-quick-ping-v2.sh --control-panel
+noisy-claude.sh --control-panel
 
 # Check status (shows active collection)
-quick-ping-v2.sh --status
+noisy-claude.sh --status
 
 # Set focus mode
-quick-ping-v2.sh --always
-quick-ping-v2.sh --smart
+noisy-claude.sh --always
+noisy-claude.sh --smart
 
 # List all sounds from active collection
-quick-ping-v2.sh --list-sounds
+noisy-claude.sh --list-sounds
 
 # Play a sound from active collection
-quick-ping-v2.sh --play 0x01.wav
+noisy-claude.sh --play 0x01.wav
 ```
 
 ## Architecture
 
 - **Frontend**: Pure HTML/CSS/JavaScript (no build step)
 - **Backend**: Python Flask server
-- **Config**: `~/Documents/MyEP/Projects/quick-ping-2/config.json`
-- **Sounds**: `~/Documents/MyEP/Projects/quick-ping-2/sounds/`
+- **Config**: `~/.noisy-claude/config.json`
+- **Sounds**: `~/.noisy-claude/sounds/`
 
 ## Requirements
 
@@ -202,14 +202,14 @@ Edit `config.json` directly or use the web UI:
 
 **Sounds not playing:**
 - Check focus mode setting
-- Test sound playback: `afplay ~/Documents/MyEP/Projects/quick-ping-2/sounds/MGS/0x01.wav`
+- Test sound playback: `afplay ~/.noisy-claude/sounds/MGS/0x01.wav`
 - Verify system volume is up
 
 **Events not triggering:**
 - Check that the event is enabled in config
 - Verify hooks are configured in `~/.claude/settings.json`
-- Check that quick-ping-v2.sh is being called from hooks
+- Check that noisy-claude.sh is being called from hooks
 
 ## Version
 
-Quick-Ping v2.0 with Control Panel and Collections
+Noisy Claude v2.0 with Control Panel and Collections

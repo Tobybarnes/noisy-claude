@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Quick-Ping Control Panel Server
-A simple Flask server for managing quick-ping configuration
+Noisy Claude Control Panel Server
+A simple Flask server for managing Noisy Claude configuration
 """
 
 import json
@@ -14,13 +14,13 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-QUICK_PING_DIR = Path(os.environ.get('QUICK_PING_DIR', Path.home() / 'Documents/MyEP/projects/noisy-claude'))
-CONFIG_FILE = QUICK_PING_DIR / 'config.json'
-SOUNDS_DIR = QUICK_PING_DIR / 'sounds'
+NOISY_CLAUDE_DIR = Path(os.environ.get('NOISY_CLAUDE_DIR', Path.home() / '.noisy-claude'))
+CONFIG_FILE = NOISY_CLAUDE_DIR / 'config.json'
+SOUNDS_DIR = NOISY_CLAUDE_DIR / 'sounds'
 
 @app.route('/')
 def index():
-    return send_from_directory(QUICK_PING_DIR, 'control-panel.html')
+    return send_from_directory(NOISY_CLAUDE_DIR, 'control-panel.html')
 
 @app.route('/api/config', methods=['GET'])
 def get_config():
@@ -98,6 +98,24 @@ def get_sounds():
         sounds = []
 
     return jsonify(sounds)
+
+@app.route('/api/sf2-wallpaper')
+def sf2_wallpaper():
+    """Serve the SF2 wallpaper image for the theme background"""
+    sf2_path = SOUNDS_DIR / 'SF2'
+    return send_from_directory(sf2_path, 'wallpaper-ryus-stage.jpg')
+
+@app.route('/api/mgs-wallpaper')
+def mgs_wallpaper():
+    """Serve the MGS wallpaper image for the theme background"""
+    mgs_path = SOUNDS_DIR / 'MGS'
+    return send_from_directory(mgs_path, 'mgs-wallpaper.jpg')
+
+@app.route('/api/2001-wallpaper')
+def hal_wallpaper():
+    """Serve the 2001 wallpaper image for the theme background"""
+    hal_path = SOUNDS_DIR / '2001-archive-sounds'
+    return send_from_directory(hal_path, 'thumb-1920-656468.jpg')
 
 @app.route('/api/play-sound', methods=['POST'])
 def play_sound():
@@ -456,7 +474,7 @@ def claude_suggests():
     return jsonify(suggestions)
 
 if __name__ == '__main__':
-    print("🔊 Quick-Ping Control Panel Server")
+    print("🔊 Noisy Claude Control Panel Server")
     print(f"📁 Config: {CONFIG_FILE}")
     print(f"🎵 Sounds: {SOUNDS_DIR}")
     print("🌐 Server starting at http://localhost:5050")

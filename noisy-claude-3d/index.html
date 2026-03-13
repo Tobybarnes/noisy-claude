@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOISY CLAUDE — 3D Sound Mixer</title>
+    <meta name="description" content="Noisy Claude: A 3D sound mixer control panel for Claude Code. Sound notifications mapped to coding events using Metal Gear Solid and Sims 2 audio.">
+    <meta property="og:title" content="Noisy Claude — 3D Sound Mixer">
+    <meta property="og:description" content="A 3D mixing desk that maps sound effects to Claude Code events. Metal Gear Solid alerts for errors, Simlish celebrations for passing tests.">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+        }
+    }
+    </script>
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body {
+            width: 100%; height: 100%; overflow: hidden;
+            font-family: 'IBM Plex Mono', monospace;
+            background: #e8e8e8; color: #1a1a1a;
+        }
+
+        #three-canvas {
+            position: fixed; inset: 0; z-index: 0;
+        }
+
+        /* ---- HUD OVERLAY ---- */
+        #hud {
+            position: fixed; top: 0; left: 0; right: 0;
+            z-index: 10; pointer-events: none;
+            display: flex; justify-content: space-between; align-items: flex-start;
+            padding: 16px 20px;
+        }
+
+        #hud > * { pointer-events: auto; }
+
+        .hud-left { display: flex; align-items: center; gap: 16px; }
+
+        .hud-title {
+            font-size: 0.8rem; font-weight: 700;
+            letter-spacing: 0.1em; text-transform: uppercase;
+            color: rgba(0,0,0,0.7);
+        }
+
+        .hud-stats {
+            display: flex; gap: 16px;
+            font-size: 0.65rem; letter-spacing: 0.08em;
+            text-transform: uppercase; color: rgba(0,0,0,0.4);
+        }
+
+        .hud-stat-val { color: rgba(0,0,0,0.7); font-weight: 700; }
+
+        .hud-right { display: flex; gap: 12px; align-items: center; }
+
+        .hud-btn {
+            padding: 6px 14px;
+            background: rgba(0,0,0,0.06);
+            border: 1px solid rgba(0,0,0,0.15);
+            color: rgba(0,0,0,0.6);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.65rem; font-weight: 500;
+            letter-spacing: 0.08em; text-transform: uppercase;
+            cursor: pointer; transition: all 0.15s;
+        }
+
+        .hud-btn:hover {
+            background: rgba(0,0,0,0.1);
+            border-color: rgba(0,0,0,0.3);
+            color: #000;
+        }
+
+        .hud-btn.active {
+            background: rgba(0,180,100,0.15);
+            border-color: rgba(0,180,100,0.4);
+            color: #007744;
+        }
+
+        .hud-btn.demo-btn { border-color: rgba(200,140,0,0.5); color: #b87a00; }
+        .hud-btn.demo-btn:hover { background: #ffb800; color: #1a1a1a; }
+
+        /* Collection select */
+        .hud-select {
+            padding: 6px 10px;
+            background: rgba(0,0,0,0.06);
+            border: 1px solid rgba(0,0,0,0.15);
+            color: rgba(0,0,0,0.7);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.65rem; letter-spacing: 0.06em;
+            cursor: pointer;
+        }
+
+        .hud-select option { background: #f0f0f0; color: #1a1a1a; }
+
+        /* ---- BOTTOM BAR ---- */
+        #bottom-bar {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            z-index: 10; pointer-events: none;
+            display: flex; justify-content: space-between; align-items: flex-end;
+            padding: 16px 20px;
+        }
+
+        #bottom-bar > * { pointer-events: auto; }
+
+        .bottom-hint {
+            font-size: 0.6rem; letter-spacing: 0.06em;
+            text-transform: uppercase; color: rgba(0,0,0,0.3);
+            transition: opacity 0.4s;
+        }
+
+        .collection-badge {
+            font-size: 0.65rem; letter-spacing: 0.1em;
+            text-transform: uppercase; color: rgba(0,0,0,0.5);
+            display: flex; align-items: center; gap: 8px;
+        }
+
+        .collection-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            transition: background 0.5s;
+        }
+
+        /* ---- TOAST ---- */
+        #toast {
+            position: fixed; top: 60px; left: 50%; transform: translateX(-50%);
+            z-index: 100; padding: 8px 20px;
+            background: rgba(0,0,0,0.8);
+            border: 1px solid rgba(0,0,0,0.9);
+            color: #ffffff; font-size: 0.7rem;
+            letter-spacing: 0.08em; text-transform: uppercase;
+            opacity: 0; transition: opacity 0.3s; pointer-events: none;
+        }
+
+        #toast.show { opacity: 1; }
+
+        /* ---- LOADING ---- */
+        #loading {
+            position: fixed; inset: 0; z-index: 200;
+            background: #e8e8e8;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            transition: opacity 0.6s;
+        }
+
+        #loading.hidden { opacity: 0; pointer-events: none; }
+
+        #loading h1 {
+            font-size: 1.1rem; font-weight: 500;
+            color: #1a1a1a; letter-spacing: 0.1em;
+        }
+
+        .loader-bar {
+            width: 180px; height: 2px;
+            background: rgba(0,0,0,0.1);
+            margin-top: 20px; overflow: hidden;
+        }
+
+        .loader-fill {
+            width: 0%; height: 100%; background: #1a1a1a;
+            transition: width 0.3s;
+        }
+
+        /* ---- DEMO BADGE ---- */
+        .demo-badge {
+            position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+            z-index: 20; padding: 6px 16px;
+            background: rgba(0,0,0,0.8);
+            border: 1px solid rgba(0,0,0,0.9);
+            color: #ffb800; font-size: 0.6rem;
+            letter-spacing: 0.1em; text-transform: uppercase;
+            pointer-events: none; opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .demo-badge.show { opacity: 1; }
+    </style>
+</head>
+<body>
+
+<div id="loading">
+    <h1>NOISY CLAUDE</h1>
+    <div class="loader-bar"><div class="loader-fill" id="loader-fill"></div></div>
+</div>
+
+<canvas id="three-canvas"></canvas>
+
+<div id="hud">
+    <div class="hud-left">
+        <span class="hud-title">Noisy Claude</span>
+        <div class="hud-stats">
+            <span><span class="hud-stat-val" id="hudEnabled">0</span> enabled</span>
+            <span><span class="hud-stat-val" id="hudTotal">0</span> events</span>
+            <span><span class="hud-stat-val" id="hudSounds">0</span> sounds</span>
+        </div>
+    </div>
+    <div class="hud-right">
+        <select class="hud-select" id="collectionSelect"></select>
+        <button class="hud-btn demo-btn" id="demoBtn">Demo</button>
+        <button class="hud-btn" id="enableAll">All On</button>
+        <button class="hud-btn" id="disableAll">All Off</button>
+        <a href="http://localhost:5050/" class="hud-btn" style="text-decoration:none;display:inline-flex;align-items:center;border-color:rgba(0,0,0,0.2);">2D View</a>
+    </div>
+</div>
+
+<div id="bottom-bar">
+    <span class="bottom-hint" id="hint">Click strips to expand · Click cells to trigger · Click LEDs to toggle · Scroll to zoom</span>
+    <div style="display: flex; align-items: center; gap: 24px;">
+        <div class="collection-badge">
+            <span class="collection-dot" id="collectionDot"></span>
+            <span id="collectionName">Loading...</span>
+        </div>
+    </div>
+</div>
+
+<div id="toast"></div>
+<div class="demo-badge" id="demoBadge">Demo Mode — Sounds play locally via Claude Code hooks</div>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+// ============================================
+// API BASE — Flask server on port 5050
+// ============================================
+const API = 'http://localhost:5050/api';
+
+// ============================================
+// STATE
+// ============================================
+let config = {};
+let collections = {};
+let activeCollectionId = '';
+let sounds = [];
+let masterEnabled = true;
+
+const CATEGORIES = {
+    'Core': ['session_start', 'session_end', 'task_complete', 'permission', 'tool_success', 'tool_failure', 'tool_pre', 'user_prompt', 'agent_response'],
+    'Agents': ['subagent_start', 'subagent_stop', 'team_created', 'team_deleted', 'teammate_message'],
+    'Git & CI': ['git_commit', 'git_push', 'git_pr_create', 'git_error', 'test_pass', 'test_fail', 'build_complete', 'build_error'],
+    'Thinking': ['thinking_short', 'thinking_medium', 'thinking_long', 'plan_mode_enter', 'plan_mode_exit', 'long_task'],
+    'Monitoring': ['context_50', 'context_75', 'context_90', 'error_threshold', 'background_task_done', 'idle_reminder'],
+    'Streaks': ['streak_3', 'streak_5', 'streak_10', 'morning', 'afternoon', 'evening', 'late_night'],
+    'Skills': ['skill_commit', 'skill_newday', 'skill_publish', 'skill_deploy', 'skill_gsd'],
+};
+
+function getAllEventIds() {
+    const ids = [];
+    for (const evts of Object.values(CATEGORIES)) {
+        for (const id of evts) ids.push(id);
+    }
+    return ids;
+}
+
+// ============================================
+// SERVER DATA LOADING
+// ============================================
+async function loadCollections() {
+    try {
+        const res = await fetch(`${API}/collections`);
+        const data = await res.json();
+        collections = data.collections || {};
+        activeCollectionId = data.active_collection || Object.keys(collections)[0] || 'default';
+    } catch (e) {
+        console.error('Failed to load collections from server:', e);
+    }
+}
+
+async function loadSounds() {
+    try {
+        const res = await fetch(`${API}/sounds`);
+        sounds = await res.json();
+    } catch (e) {
+        console.error('Failed to load sounds:', e);
+        sounds = [];
+    }
+}
+
+async function loadConfig() {
+    try {
+        const res = await fetch(`${API}/config`);
+        config = await res.json();
+        activeCollectionId = config.active_collection || activeCollectionId;
+        masterEnabled = config.master_enabled !== false;
+        collections = config.collections || collections;
+    } catch (e) {
+        console.error('Failed to load config:', e);
+        config = { events: {}, master_enabled: true, volume: 50 };
+    }
+}
+
+function playSound(soundFile) {
+    fetch(`${API}/play-sound`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sound: soundFile })
+    }).catch(() => {});
+}
+
+async function switchCollection(collectionId) {
+    try {
+        await fetch(`${API}/collections/active`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ collection_id: collectionId })
+        });
+        activeCollectionId = collectionId;
+        await loadConfig();
+        await loadSounds();
+    } catch (e) {
+        console.error('Failed to switch collection:', e);
+    }
+}
+
+// ============================================
+// THREE.JS SCENE
+// ============================================
+const canvas = document.getElementById('three-canvas');
+const renderer = new THREE.WebGLRenderer({
+    canvas, antialias: true, alpha: false, powerPreference: 'high-performance'
+});
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.1;
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xe8e8e8);
+scene.fog = new THREE.FogExp2(0xe8e8e8, 0.008);
+
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 200);
+camera.position.set(0, 10, 8);
+
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
+controls.enableRotate = false;
+controls.enablePan = false;
+controls.enableZoom = true;
+controls.minDistance = 4;
+controls.maxDistance = 22;
+controls.target.set(0, 0, -1);
+
+// ---- Lighting ----
+scene.add(new THREE.AmbientLight(0xffffff, 1.2));
+
+const keyLight = new THREE.DirectionalLight(0xffeedd, 1.5);
+keyLight.position.set(8, 15, 10);
+keyLight.castShadow = true;
+keyLight.shadow.mapSize.set(2048, 2048);
+keyLight.shadow.camera.near = 1; keyLight.shadow.camera.far = 40;
+keyLight.shadow.camera.left = -12; keyLight.shadow.camera.right = 12;
+keyLight.shadow.camera.top = 12; keyLight.shadow.camera.bottom = -12;
+scene.add(keyLight);
+
+const fillLight = new THREE.DirectionalLight(0x8899cc, 0.4);
+fillLight.position.set(-6, 10, -4);
+scene.add(fillLight);
+
+const backLight = new THREE.PointLight(0xffb800, 0.6, 30, 1.5);
+backLight.position.set(0, 2, -10);
+scene.add(backLight);
+
+const rimLightL = new THREE.PointLight(0x334466, 0.4, 20, 1.5);
+rimLightL.position.set(-8, 3, -2);
+scene.add(rimLightL);
+
+const rimLightR = new THREE.PointLight(0x334466, 0.4, 20, 1.5);
+rimLightR.position.set(8, 3, -2);
+scene.add(rimLightR);
+
+const spot = new THREE.SpotLight(0xffffff, 0.5, 30, Math.PI / 4, 0.6, 1);
+spot.position.set(0, 16, 2);
+spot.target.position.set(0, 0, -3);
+scene.add(spot);
+scene.add(spot.target);
+
+// ---- Materials ----
+const matDesk = new THREE.MeshStandardMaterial({ color: 0x1a1a1e, metalness: 0.85, roughness: 0.2 });
+const matCell = new THREE.MeshStandardMaterial({ color: 0x222228, metalness: 0.7, roughness: 0.25 });
+const matFloor = new THREE.MeshStandardMaterial({ color: 0xf0f0f0, metalness: 0.0, roughness: 0.95 });
+
+// ---- Lab floor ----
+const floorGeo = new THREE.PlaneGeometry(60, 60);
+const floor = new THREE.Mesh(floorGeo, matFloor);
+floor.rotation.x = -Math.PI / 2;
+floor.position.y = -0.5;
+floor.receiveShadow = true;
+scene.add(floor);
+
+const gridHelper = new THREE.GridHelper(60, 60, 0xd0d0d0, 0xdadada);
+gridHelper.position.y = -0.49;
+scene.add(gridHelper);
+
+// ============================================
+// ACCORDION LAYOUT CONSTANTS
+// ============================================
+const STRIP_W = 8.0;         // full width of a category strip
+const STRIP_H = 0.28;        // collapsed strip height (Z depth on table)
+const STRIP_DEPTH = 0.08;    // Y thickness
+const STRIP_GAP = 0.06;      // gap between strips
+const CELL_W = 1.15;
+const CELL_H = 0.85;
+const CELL_GAP = 0.1;
+const CELL_DEPTH = 0.1;
+const EXPANDED_ROW_H = CELL_H + 0.15; // Z space for expanded cells
+const ACCENT_W = 0.06;       // left accent bar width
+
+const clickables = [];
+const cells = new Map();      // eventId -> cell data
+const categoryData = {};      // category name -> accordion data
+
+let expandedCategory = null;  // currently expanded category name
+
+const COLLECTION_COLORS = {
+    'mgs':     { hex: 0xffb800, css: '#ffb800' },  // amber
+    'default': { hex: 0x00d4aa, css: '#00d4aa' },  // teal
+    'sf2':     { hex: 0xff4444, css: '#ff4444' },  // red (Street Fighter)
+    '2001':    { hex: 0xff2020, css: '#ff2020' },  // HAL red
+};
+function getCollectionColor() {
+    return COLLECTION_COLORS[activeCollectionId] || { hex: 0x00ff88, css: '#00ff88' };
+}
+
+// ============================================
+// TEXT TEXTURE HELPER
+// ============================================
+function makeTextTexture(text, w, h, opts = {}) {
+    const c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    const ctx = c.getContext('2d');
+    ctx.clearRect(0, 0, w, h);
+    const fs = opts.fontSize || 11;
+    ctx.font = `${opts.bold ? 'bold ' : ''}${fs}px "IBM Plex Mono", monospace`;
+    ctx.fillStyle = opts.color || '#fff';
+    ctx.textAlign = opts.align || 'center';
+    ctx.textBaseline = 'middle';
+
+    const maxW = w - 8;
+    const words = text.split(' ');
+    const lines = []; let cur = '';
+    for (const word of words) {
+        const test = cur ? cur + ' ' + word : word;
+        if (ctx.measureText(test).width > maxW && cur) { lines.push(cur); cur = word; }
+        else cur = test;
+    }
+    lines.push(cur);
+
+    const lh = fs * 1.3;
+    const startY = (h - lines.length * lh) / 2 + lh / 2;
+    lines.forEach((line, i) => {
+        ctx.fillText(line, opts.align === 'center' ? w / 2 : (opts.align === 'left' ? 6 : w - 6), startY + i * lh);
+    });
+
+    const tex = new THREE.CanvasTexture(c);
+    tex.minFilter = THREE.LinearFilter;
+    tex.magFilter = THREE.LinearFilter;
+    return tex;
+}
+
+// ============================================
+// BUILD PLAY ICON TEXTURE (▶)
+// ============================================
+function makePlayIconTexture(size, color) {
+    const c = document.createElement('canvas');
+    c.width = size; c.height = size;
+    const ctx = c.getContext('2d');
+    ctx.clearRect(0, 0, size, size);
+
+    // Draw triangle
+    const pad = size * 0.25;
+    ctx.fillStyle = color || '#ffffff';
+    ctx.beginPath();
+    ctx.moveTo(pad, pad * 0.7);
+    ctx.lineTo(size - pad * 0.6, size / 2);
+    ctx.lineTo(pad, size - pad * 0.7);
+    ctx.closePath();
+    ctx.fill();
+
+    const tex = new THREE.CanvasTexture(c);
+    tex.minFilter = THREE.LinearFilter;
+    tex.magFilter = THREE.LinearFilter;
+    return tex;
+}
+
+// ============================================
+// BUILD CELL (for expanded row)
+// ============================================
+function buildCell(eventId, parentGroup, cellWidth) {
+    const cw = cellWidth || CELL_W;
+    const events = config.events || {};
+    const ev = events[eventId];
+    if (!ev) return null;
+
+    const col = getCollectionColor();
+    const grp = new THREE.Group();
+    grp.visible = false; // starts hidden
+    grp.scale.set(1, 0.01, 1); // starts squished
+
+    // Cell base
+    const cellMat = matCell.clone();
+    const cellMesh = new THREE.Mesh(
+        new THREE.BoxGeometry(cw, CELL_DEPTH, CELL_H),
+        cellMat
+    );
+    cellMesh.position.y = CELL_DEPTH / 2;
+    cellMesh.castShadow = true;
+    cellMesh.receiveShadow = true;
+    cellMesh.userData = { type: 'cell', eventId };
+    clickables.push(cellMesh);
+    grp.add(cellMesh);
+
+    // LED dot (top-left)
+    const ledMat = new THREE.MeshStandardMaterial({
+        color: ev.enabled ? col.hex : 0x333333,
+        emissive: ev.enabled ? col.hex : 0x000000,
+        emissiveIntensity: ev.enabled ? 0.8 : 0,
+        metalness: 0.3, roughness: 0.4,
+    });
+    const led = new THREE.Mesh(new THREE.SphereGeometry(0.045, 10, 10), ledMat);
+    led.position.set(-cw / 2 + 0.12, CELL_DEPTH + 0.05, -CELL_H / 2 + 0.12);
+    led.userData = { type: 'led', eventId };
+    clickables.push(led);
+    grp.add(led);
+
+    // Play icon ▶ (top-right)
+    const playTex = makePlayIconTexture(32, 'rgba(255,255,255,0.5)');
+    const playIcon = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.18, 0.18),
+        new THREE.MeshBasicMaterial({ map: playTex, transparent: true, opacity: 0.7 })
+    );
+    playIcon.rotation.x = -Math.PI / 2;
+    playIcon.position.set(cw / 2 - 0.14, CELL_DEPTH + 0.015, -CELL_H / 2 + 0.14);
+    grp.add(playIcon);
+
+    // Event name label (center)
+    const displayName = eventId.replace(/_/g, ' ');
+    const nameTex = makeTextTexture(displayName.toUpperCase(), 128, 48, {
+        fontSize: 9, bold: true, color: 'rgba(255,255,255,0.85)'
+    });
+    const nameLabel = new THREE.Mesh(
+        new THREE.PlaneGeometry(cw - 0.1, 0.32),
+        new THREE.MeshBasicMaterial({ map: nameTex, transparent: true, opacity: 0.95 })
+    );
+    nameLabel.rotation.x = -Math.PI / 2;
+    nameLabel.position.set(0, CELL_DEPTH + 0.012, -0.04);
+    grp.add(nameLabel);
+
+    // Sound label (bottom)
+    const soundText = ev.sound_label || ev.sound || '\u2014';
+    const soundTex = makeTextTexture(soundText, 128, 28, {
+        fontSize: 7, color: col.css
+    });
+    const soundLabel = new THREE.Mesh(
+        new THREE.PlaneGeometry(cw - 0.1, 0.2),
+        new THREE.MeshBasicMaterial({ map: soundTex, transparent: true, opacity: 0.8 })
+    );
+    soundLabel.rotation.x = -Math.PI / 2;
+    soundLabel.position.set(0, CELL_DEPTH + 0.012, CELL_H / 2 - 0.14);
+    grp.add(soundLabel);
+
+    parentGroup.add(grp);
+
+    return {
+        grp, cellMesh, cellMat, led, ledMat, playIcon,
+        nameLabel, soundLabel, eventId,
+        glowTime: 0
+    };
+}
+
+// ============================================
+// BUILD CATEGORY STRIP
+// ============================================
+function buildCategoryStrip(category, eventIds, baseZ, parentGroup) {
+    const col = getCollectionColor();
+    const validEvents = eventIds.filter(id => config.events?.[id]);
+    const count = validEvents.length;
+
+    const data = {
+        category,
+        eventIds: validEvents,
+        expandProgress: 0,       // 0 = collapsed, 1 = expanded
+        targetExpand: 0,
+        baseZ,                   // Z position of strip top edge
+        stripGroup: new THREE.Group(),
+        cellsGroup: new THREE.Group(),
+        cellObjects: [],
+        stripMesh: null,
+        accentMesh: null,
+        borderMesh: null,
+        hoverGlow: 0,
+    };
+
+    // Strip panel
+    const stripMat = new THREE.MeshStandardMaterial({
+        color: 0x1e1e24, metalness: 0.75, roughness: 0.25
+    });
+    const stripMesh = new THREE.Mesh(
+        new THREE.BoxGeometry(STRIP_W, STRIP_DEPTH, STRIP_H),
+        stripMat
+    );
+    stripMesh.position.set(0, STRIP_DEPTH / 2, 0);
+    stripMesh.castShadow = true;
+    stripMesh.receiveShadow = true;
+    stripMesh.userData = { type: 'strip', category };
+    clickables.push(stripMesh);
+    data.stripGroup.add(stripMesh);
+    data.stripMesh = stripMesh;
+    data.stripMat = stripMat;
+
+    // Left accent bar (collection-colored)
+    const accentMat = new THREE.MeshStandardMaterial({
+        color: col.hex, emissive: col.hex, emissiveIntensity: 0.4,
+        metalness: 0.4, roughness: 0.3
+    });
+    const accent = new THREE.Mesh(
+        new THREE.BoxGeometry(ACCENT_W, STRIP_DEPTH + 0.02, STRIP_H + 0.02),
+        accentMat
+    );
+    accent.position.set(-STRIP_W / 2 + ACCENT_W / 2, STRIP_DEPTH / 2, 0);
+    data.stripGroup.add(accent);
+    data.accentMesh = accent;
+    data.accentMat = accentMat;
+
+    // Border (hidden until expanded)
+    const borderMat = new THREE.MeshStandardMaterial({
+        color: col.hex, emissive: col.hex, emissiveIntensity: 0.2,
+        metalness: 0.4, roughness: 0.3, transparent: true, opacity: 0
+    });
+    // Thin border frame around strip
+    const borderTop = new THREE.Mesh(
+        new THREE.BoxGeometry(STRIP_W + 0.04, 0.02, 0.02),
+        borderMat
+    );
+    borderTop.position.set(0, STRIP_DEPTH + 0.01, -STRIP_H / 2);
+    data.stripGroup.add(borderTop);
+    data.borderMesh = borderTop;
+    data.borderMat = borderMat;
+
+    // Category name (left-aligned)
+    const catTex = makeTextTexture(category.toUpperCase(), 200, 32, {
+        fontSize: 10, bold: true, color: 'rgba(255,255,255,0.75)', align: 'left'
+    });
+    const catLabel = new THREE.Mesh(
+        new THREE.PlaneGeometry(2.2, 0.22),
+        new THREE.MeshBasicMaterial({ map: catTex, transparent: true })
+    );
+    catLabel.rotation.x = -Math.PI / 2;
+    catLabel.position.set(-STRIP_W / 2 + ACCENT_W + 1.2, STRIP_DEPTH + 0.005, 0);
+    data.stripGroup.add(catLabel);
+
+    // Event count badge (right side)
+    const badgeTex = makeTextTexture(`${count}`, 32, 32, {
+        fontSize: 10, bold: true, color: col.css
+    });
+    const badge = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.22, 0.22),
+        new THREE.MeshBasicMaterial({ map: badgeTex, transparent: true })
+    );
+    badge.rotation.x = -Math.PI / 2;
+    badge.position.set(STRIP_W / 2 - 0.3, STRIP_DEPTH + 0.005, 0);
+    data.stripGroup.add(badge);
+
+    data.stripGroup.position.set(0, 0, baseZ);
+    parentGroup.add(data.stripGroup);
+
+    // Build cells (hidden initially)
+    data.cellsGroup.position.set(0, 0, baseZ + STRIP_H / 2 + 0.08);
+    parentGroup.add(data.cellsGroup);
+
+    // Auto-size cells to fit within the desk width
+    const maxTotalW = STRIP_W - 0.3; // leave small margin
+    const fitCellW = Math.min(CELL_W, (maxTotalW - (count - 1) * CELL_GAP) / count);
+    const totalCellsW = count * fitCellW + (count - 1) * CELL_GAP;
+    const startX = -totalCellsW / 2 + fitCellW / 2;
+    data.fitCellW = fitCellW; // store for cell building
+
+    for (let i = 0; i < validEvents.length; i++) {
+        const eventId = validEvents[i];
+        const cellX = startX + i * (fitCellW + CELL_GAP);
+        const cellGrp = buildCell(eventId, data.cellsGroup, fitCellW);
+        if (cellGrp) {
+            cellGrp.grp.position.set(cellX, 0, CELL_H / 2);
+            cellGrp.cellIndex = i; // for stagger animation
+            data.cellObjects.push(cellGrp);
+            cells.set(eventId, cellGrp);
+        }
+    }
+
+    return data;
+}
+
+// ============================================
+// MASTER SECTION (top)
+// ============================================
+let collectionKnob, powerLED, knobIndicator;
+let masterDisplayCtx, masterDisplayTex;
+
+function buildMaster(parentGroup, z) {
+    const grp = new THREE.Group();
+    grp.position.set(0, 0, z);
+
+    const panelW = 3.0;
+    const panelH = 1.6;
+
+    const panelMat = new THREE.MeshStandardMaterial({ color: 0x1a1a1e, metalness: 0.85, roughness: 0.2 });
+    const panel = new THREE.Mesh(new THREE.BoxGeometry(panelW, 0.14, panelH), panelMat);
+    panel.position.set(0, 0.07, 0);
+    panel.castShadow = true;
+    grp.add(panel);
+
+    // Collection knob
+    const knobMat = new THREE.MeshStandardMaterial({ color: 0x333338, metalness: 0.9, roughness: 0.2 });
+    collectionKnob = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.26, 0.14, 24), knobMat);
+    collectionKnob.position.set(-0.7, 0.21, -0.2);
+    collectionKnob.userData = { type: 'knob' };
+    clickables.push(collectionKnob);
+    grp.add(collectionKnob);
+
+    const col = getCollectionColor();
+    const indMat = new THREE.MeshStandardMaterial({ color: col.hex, emissive: col.hex, emissiveIntensity: 0.6 });
+    knobIndicator = new THREE.Mesh(new THREE.BoxGeometry(0.03, 0.16, 0.03), indMat);
+    knobIndicator.position.set(0, 0.01, -0.1);
+    collectionKnob.add(knobIndicator);
+
+    const addLabel = (text, opts, pos) => {
+        const tex = makeTextTexture(text, opts.w || 128, opts.h || 24, opts);
+        const m = new THREE.Mesh(
+            new THREE.PlaneGeometry(opts.pw || 1.0, opts.ph || 0.2),
+            new THREE.MeshBasicMaterial({ map: tex, transparent: true })
+        );
+        m.rotation.x = -Math.PI / 2;
+        m.position.set(...pos);
+        grp.add(m);
+    };
+
+    addLabel('COLLECTION', { fontSize: 7, bold: true, color: 'rgba(255,255,255,0.5)', w: 96, pw: 0.8 }, [-0.7, 0.15, -0.55]);
+    addLabel('CLICK TO SWITCH', { fontSize: 6, color: 'rgba(255,255,255,0.3)', w: 128, pw: 1.0, ph: 0.12 }, [-0.7, 0.15, 0.1]);
+
+    // Power LED
+    const pwrMat = new THREE.MeshStandardMaterial({
+        color: 0x00ff88, emissive: 0x00ff88, emissiveIntensity: 0.8, metalness: 0.3, roughness: 0.4
+    });
+    powerLED = new THREE.Mesh(new THREE.SphereGeometry(0.06, 12, 12), pwrMat);
+    powerLED.position.set(0.9, 0.18, -0.2);
+    powerLED.userData = { type: 'power' };
+    clickables.push(powerLED);
+    grp.add(powerLED);
+    addLabel('PWR', { fontSize: 6, color: 'rgba(255,255,255,0.4)', w: 48, pw: 0.3, ph: 0.12 }, [0.9, 0.15, -0.45]);
+
+    // Display panel
+    const dc = document.createElement('canvas');
+    dc.width = 192; dc.height = 80;
+    masterDisplayCtx = dc.getContext('2d');
+    masterDisplayTex = new THREE.CanvasTexture(dc);
+    masterDisplayTex.minFilter = THREE.LinearFilter;
+    const disp = new THREE.Mesh(
+        new THREE.PlaneGeometry(1.2, 0.5),
+        new THREE.MeshBasicMaterial({ map: masterDisplayTex })
+    );
+    disp.rotation.x = -Math.PI / 2;
+    disp.position.set(0.15, 0.15, 0.25);
+    grp.add(disp);
+
+    parentGroup.add(grp);
+}
+
+function updateDisplay() {
+    if (!masterDisplayCtx) return;
+    const ctx = masterDisplayCtx;
+    const w = 192, h = 80;
+    const col = getCollectionColor();
+
+    ctx.fillStyle = '#0a0a0f';
+    ctx.fillRect(0, 0, w, h);
+    ctx.strokeStyle = col.css;
+    ctx.lineWidth = 1;
+    ctx.strokeRect(2, 2, w - 4, h - 4);
+
+    ctx.font = 'bold 12px "IBM Plex Mono", monospace';
+    ctx.fillStyle = col.css;
+    ctx.textAlign = 'center';
+    const colName = collections[activeCollectionId]?.name || activeCollectionId;
+    ctx.fillText(colName.substring(0, 18), w / 2, 22);
+
+    ctx.font = '9px "IBM Plex Mono", monospace';
+    ctx.fillStyle = masterEnabled ? '#00ff88' : '#ff3333';
+    ctx.fillText(masterEnabled ? 'ACTIVE' : 'MUTED', w / 2, 40);
+
+    ctx.font = '8px "IBM Plex Mono", monospace';
+    ctx.fillStyle = 'rgba(255,255,255,0.5)';
+    const events = config.events || {};
+    const enabled = Object.values(events).filter(e => e.enabled).length;
+    const total = Object.keys(events).length;
+    ctx.fillText(`${enabled}/${total} EVENTS`, w / 2, 58);
+
+    ctx.fillStyle = 'rgba(0,0,0,0.06)';
+    for (let y = 0; y < h; y += 3) ctx.fillRect(0, y, w, 1);
+
+    masterDisplayTex.needsUpdate = true;
+}
+
+// ============================================
+// BUILD ACCORDION DESK
+// ============================================
+let accordionGroup;
+
+function buildDesk() {
+    accordionGroup = new THREE.Group();
+    scene.add(accordionGroup);
+
+    const catEntries = Object.entries(CATEGORIES);
+    const numCats = catEntries.length;
+
+    // Size desk to fit one expanded category at all times
+    const maxExpandedH = EXPANDED_ROW_H; // space for one expanded row
+    const totalCollapsedH = numCats * (STRIP_H + STRIP_GAP) + 2.0; // +2 for master
+    const totalH = totalCollapsedH + maxExpandedH + 1.0; // extra padding
+    const startZ = -totalH / 2;
+
+    // Desk body
+    const deskW = STRIP_W + 0.6;
+    const deskH = totalH;
+    const deskBody = new THREE.Mesh(
+        new THREE.BoxGeometry(deskW, 0.2, deskH),
+        matDesk
+    );
+    deskBody.position.set(0, -0.1, startZ + deskH / 2);
+    deskBody.castShadow = true;
+    deskBody.receiveShadow = true;
+    accordionGroup.add(deskBody);
+
+    // Edge accents
+    const col = getCollectionColor();
+    const edgeMat = new THREE.MeshStandardMaterial({
+        color: col.hex, emissive: col.hex, emissiveIntensity: 0.3,
+        metalness: 0.5, roughness: 0.3
+    });
+    const et = 0.025;
+    const edges = [];
+    const deskCenterZ = startZ + deskH / 2;
+    let e;
+    e = new THREE.Mesh(new THREE.BoxGeometry(deskW, et, et), edgeMat);
+    e.position.set(0, 0.01, deskCenterZ + deskH / 2);
+    accordionGroup.add(e); edges.push(e);
+    e = new THREE.Mesh(new THREE.BoxGeometry(deskW, et, et), edgeMat);
+    e.position.set(0, 0.01, deskCenterZ - deskH / 2);
+    accordionGroup.add(e); edges.push(e);
+    e = new THREE.Mesh(new THREE.BoxGeometry(et, et, deskH), edgeMat);
+    e.position.set(-deskW / 2, 0.01, deskCenterZ);
+    accordionGroup.add(e); edges.push(e);
+    e = new THREE.Mesh(new THREE.BoxGeometry(et, et, deskH), edgeMat);
+    e.position.set(deskW / 2, 0.01, deskCenterZ);
+    accordionGroup.add(e); edges.push(e);
+    window._edgeMeshes = edges;
+
+    let currentZ = startZ;
+
+    // Master panel at top
+    buildMaster(accordionGroup, currentZ + 0.8);
+    currentZ += 2.0;
+
+    // Build category strips
+    for (const [category, eventIds] of catEntries) {
+        const data = buildCategoryStrip(category, eventIds, currentZ, accordionGroup);
+        categoryData[category] = data;
+        currentZ += STRIP_H + STRIP_GAP;
+    }
+
+    // Center camera on accordion
+    controls.target.set(0, 0, startZ + totalH / 2);
+
+    updateDisplay();
+}
+
+// ============================================
+// ACCORDION EXPAND/COLLAPSE
+// ============================================
+function expandCategory(category) {
+    if (expandedCategory === category) {
+        // Collapse if clicking same
+        categoryData[category].targetExpand = 0;
+        expandedCategory = null;
+        return;
+    }
+
+    // Collapse previous
+    if (expandedCategory && categoryData[expandedCategory]) {
+        categoryData[expandedCategory].targetExpand = 0;
+    }
+
+    // Expand new
+    expandedCategory = category;
+    categoryData[category].targetExpand = 1;
+}
+
+function updateAccordionLayout(delta) {
+    const speed = 5.0; // lerp speed
+    const catEntries = Object.entries(CATEGORIES);
+    const numC = catEntries.length;
+    const totalH = numC * (STRIP_H + STRIP_GAP) + 2.0 + EXPANDED_ROW_H + 1.0;
+    const startZ = -totalH / 2;
+    let currentZ = startZ + 2.0; // after master
+
+    for (const [category] of catEntries) {
+        const data = categoryData[category];
+        if (!data) continue;
+
+        // Lerp expandProgress toward target
+        const diff = data.targetExpand - data.expandProgress;
+        if (Math.abs(diff) > 0.001) {
+            data.expandProgress += diff * Math.min(speed * delta, 0.3);
+        } else {
+            data.expandProgress = data.targetExpand;
+        }
+
+        const progress = data.expandProgress;
+        const expandedSpace = EXPANDED_ROW_H * progress;
+
+        // Position strip
+        data.stripGroup.position.z = currentZ;
+
+        // Strip visual feedback
+        if (progress > 0.01) {
+            data.stripMat.emissive.setHex(getCollectionColor().hex);
+            data.stripMat.emissiveIntensity = 0.08 * progress;
+            data.borderMat.opacity = progress * 0.6;
+        } else {
+            data.stripMat.emissive.setHex(0x000000);
+            data.stripMat.emissiveIntensity = data.hoverGlow;
+            data.borderMat.opacity = 0;
+        }
+
+        // Position cells group just below strip
+        data.cellsGroup.position.z = currentZ + STRIP_H / 2 + 0.06;
+
+        // Animate cells visibility & scale
+        for (const cellObj of data.cellObjects) {
+            const staggerDelay = cellObj.cellIndex * 0.08;
+            const cellProgress = Math.max(0, Math.min(1, (progress - staggerDelay) / (1 - staggerDelay + 0.01)));
+
+            if (cellProgress > 0.01) {
+                cellObj.grp.visible = true;
+                // Lerp scale Y from 0.01 to 1
+                const targetScaleY = cellProgress;
+                cellObj.grp.scale.y += (targetScaleY - cellObj.grp.scale.y) * Math.min(speed * delta * 1.5, 0.4);
+                cellObj.grp.position.y = 0;
+            } else {
+                cellObj.grp.scale.y = 0.01;
+                cellObj.grp.visible = false;
+            }
+        }
+
+        currentZ += STRIP_H + STRIP_GAP + expandedSpace;
+    }
+}
+
+// ============================================
+// INTERACTIONS
+// ============================================
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+let hovered = null;
+
+canvas.addEventListener('mousemove', (e) => {
+    mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    raycaster.setFromCamera(mouse, camera);
+    const hits = raycaster.intersectObjects(clickables);
+
+    // Reset all strip hover glows
+    for (const data of Object.values(categoryData)) {
+        data.hoverGlow = 0;
+    }
+
+    if (hits.length > 0) {
+        const obj = hits[0].object;
+        if (hovered !== obj) {
+            if (hovered?.userData.type === 'cell') {
+                hovered.material.emissive.setHex(0x000000);
+                hovered.material.emissiveIntensity = 0;
+            }
+            hovered = obj;
+            if (obj.userData.type === 'cell') {
+                obj.material.emissive.setHex(0x333344);
+                obj.material.emissiveIntensity = 0.2;
+            }
+            if (obj.userData.type === 'strip') {
+                const data = categoryData[obj.userData.category];
+                if (data && data.expandProgress < 0.5) {
+                    data.hoverGlow = 0.06;
+                }
+            }
+            canvas.style.cursor = 'pointer';
+        }
+    } else {
+        if (hovered?.userData.type === 'cell') {
+            hovered.material.emissive.setHex(0x000000);
+            hovered.material.emissiveIntensity = 0;
+        }
+        hovered = null;
+        canvas.style.cursor = 'default';
+    }
+});
+
+canvas.addEventListener('click', (e) => {
+    mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    raycaster.setFromCamera(mouse, camera);
+    const hits = raycaster.intersectObjects(clickables);
+    if (hits.length === 0) return;
+
+    const obj = hits[0].object;
+    const { type, eventId, category } = obj.userData;
+
+    if (type === 'strip' && category) {
+        expandCategory(category);
+    }
+
+    if (type === 'cell' && eventId) {
+        triggerCellGlow(eventId);
+        const ev = config.events[eventId];
+        showToast(`${eventId.replace(/_/g, ' ').toUpperCase()} — ${ev?.sound_label || ev?.sound || ''}`);
+        if (ev?.sound) playSound(ev.sound);
+    }
+
+    if (type === 'led' && eventId) {
+        const ev = config.events[eventId];
+        if (!ev) return;
+        ev.enabled = !ev.enabled;
+        const cell = cells.get(eventId);
+        if (cell) {
+            const col = getCollectionColor();
+            cell.ledMat.color.setHex(ev.enabled ? col.hex : 0x333333);
+            cell.ledMat.emissive.setHex(ev.enabled ? col.hex : 0x000000);
+            cell.ledMat.emissiveIntensity = ev.enabled ? 0.8 : 0;
+        }
+        updateHUD();
+        updateDisplay();
+    }
+
+    if (type === 'knob') {
+        cycleCollection();
+    }
+
+    if (type === 'power') {
+        masterEnabled = !masterEnabled;
+        config.master_enabled = masterEnabled;
+        powerLED.material.emissive.setHex(masterEnabled ? 0x00ff88 : 0x330000);
+        powerLED.material.color.setHex(masterEnabled ? 0x00ff88 : 0x330000);
+        powerLED.material.emissiveIntensity = masterEnabled ? 0.8 : 0.3;
+        updateDisplay();
+        showToast(masterEnabled ? 'SOUNDS RESTORED' : 'ALL SOUNDS MUTED');
+    }
+});
+
+canvas.addEventListener('pointerdown', () => {
+    document.getElementById('hint').style.opacity = '0';
+}, { once: true });
+
+// ============================================
+// CELL GLOW
+// ============================================
+function triggerCellGlow(eventId) {
+    const cell = cells.get(eventId);
+    if (cell) cell.glowTime = 1.0;
+}
+
+function updateCellGlow(delta) {
+    const col = getCollectionColor();
+    for (const [eventId, cell] of cells) {
+        if (cell.glowTime > 0) {
+            cell.glowTime = Math.max(0, cell.glowTime - delta * 2.5);
+            cell.cellMat.emissive.setHex(col.hex);
+            cell.cellMat.emissiveIntensity = cell.glowTime * 0.6;
+            // Flash play icon brighter during glow
+            if (cell.playIcon) {
+                cell.playIcon.material.opacity = 0.4 + cell.glowTime * 0.6;
+            }
+        } else {
+            // Subtle idle flicker for enabled events
+            const ev = config.events?.[eventId];
+            if (Math.random() > 0.998 && ev?.enabled) {
+                cell.cellMat.emissive.setHex(col.hex);
+                cell.cellMat.emissiveIntensity = 0.05;
+            } else if (cell.cellMat.emissiveIntensity > 0) {
+                cell.cellMat.emissiveIntensity *= 0.94;
+                if (cell.cellMat.emissiveIntensity < 0.005) {
+                    cell.cellMat.emissive.setHex(0x000000);
+                    cell.cellMat.emissiveIntensity = 0;
+                }
+            }
+            if (cell.playIcon) {
+                cell.playIcon.material.opacity = 0.5;
+            }
+        }
+    }
+}
+
+// ============================================
+// COLLECTION CYCLING
+// ============================================
+let isSwitching = false;
+
+async function cycleCollection() {
+    if (isSwitching) return;
+    isSwitching = true;
+
+    const ids = Object.keys(collections);
+    const idx = ids.indexOf(activeCollectionId);
+    const nextId = ids[(idx + 1) % ids.length];
+
+    await switchCollection(nextId);
+    rebuildCells();
+
+    const startRot = collectionKnob.rotation.y;
+    const targetRot = startRot + Math.PI;
+    const t0 = performance.now();
+    function animKnob(now) {
+        const t = Math.min((now - t0) / 500, 1);
+        collectionKnob.rotation.y = startRot + (targetRot - startRot) * (1 - Math.pow(1 - t, 3));
+        if (t < 1) requestAnimationFrame(animKnob);
+        else isSwitching = false;
+    }
+    requestAnimationFrame(animKnob);
+
+    const col = getCollectionColor();
+    backLight.color.setHex(col.hex);
+    fillLight.color.setHex(col.hex);
+
+    updateCollectionUI();
+    showToast('COLLECTION: ' + (collections[activeCollectionId]?.name || activeCollectionId).toUpperCase());
+}
+
+function rebuildCells() {
+    const col = getCollectionColor();
+
+    knobIndicator.material.color.setHex(col.hex);
+    knobIndicator.material.emissive.setHex(col.hex);
+
+    // Update edge accents
+    if (window._edgeMeshes) {
+        for (const edge of window._edgeMeshes) {
+            edge.material.color.setHex(col.hex);
+            edge.material.emissive.setHex(col.hex);
+        }
+    }
+
+    // Update strip accents and borders
+    for (const data of Object.values(categoryData)) {
+        data.accentMat.color.setHex(col.hex);
+        data.accentMat.emissive.setHex(col.hex);
+        data.borderMat.color.setHex(col.hex);
+        data.borderMat.emissive.setHex(col.hex);
+    }
+
+    for (const [eventId, cell] of cells) {
+        const ev = config.events?.[eventId];
+        if (!ev) continue;
+
+        cell.ledMat.color.setHex(ev.enabled ? col.hex : 0x333333);
+        cell.ledMat.emissive.setHex(ev.enabled ? col.hex : 0x000000);
+        cell.ledMat.emissiveIntensity = ev.enabled ? 0.8 : 0;
+
+        const soundText = ev.sound_label || ev.sound || '\u2014';
+        const newTex = makeTextTexture(soundText, 128, 28, { fontSize: 7, color: col.css });
+        cell.soundLabel.material.map.dispose();
+        cell.soundLabel.material.map = newTex;
+        cell.soundLabel.material.needsUpdate = true;
+    }
+
+    updateDisplay();
+    updateHUD();
+}
+
+// ============================================
+// DEMO MODE
+// ============================================
+let demoRunning = false;
+let demoInterval = null;
+
+function findCategoryForEvent(eventId) {
+    for (const [cat, evts] of Object.entries(CATEGORIES)) {
+        if (evts.includes(eventId)) return cat;
+    }
+    return null;
+}
+
+function startDemo() {
+    if (demoRunning) { stopDemo(); return; }
+    demoRunning = true;
+    document.getElementById('demoBtn').classList.add('active');
+    document.getElementById('demoBadge').classList.add('show');
+
+    const sequence = [
+        'session_start', 'user_prompt', 'thinking_short', 'tool_pre', 'tool_success',
+        'tool_pre', 'tool_success', 'streak_3', 'tool_pre', 'tool_failure',
+        'thinking_medium', 'tool_pre', 'tool_success', 'git_commit',
+        'tool_pre', 'tool_success', 'streak_5', 'test_pass', 'git_push',
+        'subagent_start', 'thinking_long', 'subagent_stop', 'task_complete',
+        'git_pr_create', 'streak_10'
+    ];
+    let seqIdx = 0;
+    const eventIds = getAllEventIds().filter(id => config.events?.[id]);
+
+    demoInterval = setInterval(() => {
+        if (!demoRunning) return;
+
+        let eventId;
+        if (seqIdx < sequence.length) {
+            eventId = sequence[seqIdx];
+            seqIdx++;
+        } else {
+            eventId = eventIds[Math.floor(Math.random() * eventIds.length)];
+        }
+
+        // Auto-expand the category containing this event
+        const cat = findCategoryForEvent(eventId);
+        if (cat && expandedCategory !== cat) {
+            expandCategory(cat);
+        }
+
+        triggerCellGlow(eventId);
+    }, 600);
+}
+
+function stopDemo() {
+    demoRunning = false;
+    if (demoInterval) clearInterval(demoInterval);
+    demoInterval = null;
+    document.getElementById('demoBtn').classList.remove('active');
+    document.getElementById('demoBadge').classList.remove('show');
+}
+
+// ============================================
+// HUD UPDATES
+// ============================================
+function updateHUD() {
+    const events = config.events || {};
+    const total = Object.keys(events).length;
+    const enabled = Object.values(events).filter(e => e.enabled).length;
+    document.getElementById('hudEnabled').textContent = enabled;
+    document.getElementById('hudTotal').textContent = total;
+    document.getElementById('hudSounds').textContent = sounds.length;
+}
+
+function updateCollectionUI() {
+    const col = getCollectionColor();
+    document.getElementById('collectionDot').style.background = col.css;
+    document.getElementById('collectionName').textContent = collections[activeCollectionId]?.name || activeCollectionId;
+
+    const sel = document.getElementById('collectionSelect');
+    sel.value = activeCollectionId;
+}
+
+function updateCollectionSelect() {
+    const sel = document.getElementById('collectionSelect');
+    sel.innerHTML = '';
+    for (const [id, c] of Object.entries(collections)) {
+        const opt = document.createElement('option');
+        opt.value = id;
+        opt.textContent = c.name;
+        if (id === activeCollectionId) opt.selected = true;
+        sel.appendChild(opt);
+    }
+}
+
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// ============================================
+// HUD EVENT LISTENERS
+// ============================================
+document.getElementById('collectionSelect').addEventListener('change', (e) => {
+    if (isSwitching) return;
+    cycleCollection();
+});
+
+document.getElementById('demoBtn').addEventListener('click', startDemo);
+
+document.getElementById('enableAll').addEventListener('click', () => {
+    for (const ev of Object.values(config.events || {})) ev.enabled = true;
+    rebuildCells();
+    showToast('ALL ENABLED');
+});
+
+document.getElementById('disableAll').addEventListener('click', () => {
+    for (const ev of Object.values(config.events || {})) ev.enabled = false;
+    rebuildCells();
+    showToast('ALL DISABLED');
+});
+
+// ============================================
+// ANIMATION LOOP
+// ============================================
+const clock = new THREE.Clock();
+
+function animate() {
+    requestAnimationFrame(animate);
+    const delta = clock.getDelta();
+    const elapsed = clock.getElapsedTime();
+
+    controls.update();
+    updateAccordionLayout(delta);
+    updateCellGlow(delta);
+
+    // Power LED pulse
+    if (powerLED && masterEnabled) {
+        powerLED.material.emissiveIntensity = 0.4 + 0.5 * (0.5 + 0.5 * Math.sin(elapsed * 2.5));
+    }
+
+    renderer.render(scene, camera);
+}
+
+// ============================================
+// RESIZE
+// ============================================
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// ============================================
+// INIT
+// ============================================
+async function init() {
+    const fill = document.getElementById('loader-fill');
+    fill.style.width = '20%';
+
+    await loadConfig();
+    fill.style.width = '40%';
+
+    await loadCollections();
+    fill.style.width = '60%';
+
+    await loadSounds();
+    fill.style.width = '80%';
+
+    buildDesk();
+    updateCollectionSelect();
+    updateCollectionUI();
+    updateHUD();
+
+    fill.style.width = '100%';
+    setTimeout(() => document.getElementById('loading').classList.add('hidden'), 400);
+
+    animate();
+}
+
+init();
+</script>
+
+</body>
+</html>

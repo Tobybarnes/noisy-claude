@@ -1,4 +1,4 @@
-# Deployment Plan -- Quick-Ping Showcase Site
+# Deployment Plan -- Noisy Claude Showcase Site
 
 ## Recommendation: GitHub Pages
 
@@ -20,8 +20,8 @@
 
 **GitHub Pages wins because:**
 
-1. **No build step** -- Quick-Ping's showcase is static HTML/CSS/JS, like the Control Panel itself. Push and done.
-2. **Same platform** -- The Quick-Ping repo already lives on GitHub. One fewer account/service to manage.
+1. **No build step** -- Noisy Claude's showcase is static HTML/CSS/JS, like the Control Panel itself. Push and done.
+2. **Same platform** -- The Noisy Claude repo already lives on GitHub. One fewer account/service to manage.
 3. **Simplicity** -- No config files, no build commands, no framework detection. Just HTML files served from a branch.
 4. **Free forever** -- No usage-based pricing surprises. The showcase site will never exceed GitHub Pages limits.
 
@@ -44,22 +44,22 @@ Choose Netlify if:
 
 ### Option A: Separate Repository (Recommended)
 
-Create a new repo `quick-ping-site` (or similar) with its own deployment:
+Create a new repo `noisy-claude-site` (or similar) with its own deployment:
 
 ```bash
 # Create the showcase site repo
-gh repo create quick-ping-site --public --description "Quick-Ping showcase website"
+gh repo create noisy-claude-site --public --description "Noisy Claude showcase website"
 
 # Push the site files
 cd showcase/
 git init
 git add .
 git commit -m "Initial showcase site"
-git remote add origin git@github.com:USERNAME/quick-ping-site.git
+git remote add origin git@github.com:USERNAME/noisy-claude-site.git
 git push -u origin main
 
 # Enable GitHub Pages
-gh api repos/USERNAME/quick-ping-site/pages \
+gh api repos/USERNAME/noisy-claude-site/pages \
   --method POST \
   --field source='{"branch":"main","path":"/"}'
 ```
@@ -69,7 +69,7 @@ gh api repos/USERNAME/quick-ping-site/pages \
 
 ### Option B: Subdirectory in Main Repo
 
-Deploy from a `/docs` or `/showcase` directory in the quick-ping-2 repo:
+Deploy from a `/docs` or `/showcase` directory in the noisy-claude repo:
 
 ```
 Settings > Pages > Source: Deploy from a branch
@@ -87,7 +87,7 @@ The showcase site is a different project with different concerns (marketing, des
 ## Directory Structure
 
 ```
-quick-ping-site/
+noisy-claude-site/
   index.html              # The entire showcase site (single file, < 50KB)
   favicon.ico
   CNAME                   # Custom domain (if applicable)
@@ -104,7 +104,7 @@ The showcase site deliberately does not include sound playback. This is an inten
 
 If a custom domain is desired:
 
-1. Purchase domain (e.g., `quickping.dev` or `quick-ping.dev`)
+1. Purchase domain (e.g., `noisyclaude.dev` or `noisy-claude.dev`)
 2. Add CNAME file to repo root with domain name
 3. Configure DNS:
    - A records pointing to GitHub Pages IPs (185.199.108-111.153)
@@ -132,7 +132,7 @@ If a custom domain is desired:
 - [ ] Copy buttons work on live site
 
 ### Post-Deploy
-- [ ] Update main Quick-Ping repo README with link to showcase site
+- [ ] Update main Noisy Claude repo README with link to showcase site
 - [ ] Share URL for team review
 - [ ] Check Google PageSpeed Insights score
 - [ ] Set up basic analytics if desired (Plausible, Simple Analytics -- privacy-respecting)

@@ -1,10 +1,10 @@
-# Quick-Ping 2 🎚️
+# Noisy Claude 🎚️
 
 **Professional audio rack-style sound notification system for Claude Code**
 
 A dark steel, hardware-inspired control panel for managing sound events in Claude Code. Think SSL console meets OP-1 synthesizer meets Dieter Rams minimalism.
 
-![Quick-Ping 2](https://via.placeholder.com/800x400/1A1A1A/00FF00?text=Quick-Ping+2+Control+Panel)
+![Noisy Claude](https://via.placeholder.com/800x400/1A1A1A/00FF00?text=Noisy Claude+2+Control+Panel)
 
 ## Features
 
@@ -47,7 +47,7 @@ AI-powered smart recommendations:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/quick-ping-2.git ~/ep/projects/quick-ping-2
+git clone https://github.com/yourusername/noisy-claude.git ~/ep/projects/noisy-claude
 
 # Install dependencies (Flask for control panel)
 pip3 install flask flask-cors
@@ -56,7 +56,7 @@ pip3 install flask flask-cors
 # (WAV, MP3, AIFF, M4A formats supported)
 
 # Launch the control panel
-~/ep/projects/quick-ping-2/launch-control-panel.sh
+~/ep/projects/noisy-claude/launch-control-panel.sh
 ```
 
 Open http://localhost:5050 in your browser
@@ -72,7 +72,7 @@ Add to `~/.claude/settings.json`:
       "matcher": ".*",
       "hooks": [{
         "type": "command",
-        "command": "/Users/yourusername/ep/projects/quick-ping-2/quick-ping-v2.sh",
+        "command": "/Users/yourusername/ep/projects/noisy-claude/noisy-claude.sh",
         "async": true,
         "timeout": 5
       }]
@@ -81,7 +81,7 @@ Add to `~/.claude/settings.json`:
       "matcher": ".*",
       "hooks": [{
         "type": "command",
-        "command": "/Users/yourusername/ep/projects/quick-ping-2/quick-ping-v2.sh",
+        "command": "/Users/yourusername/ep/projects/noisy-claude/noisy-claude.sh",
         "async": true,
         "timeout": 5
       }]
@@ -89,7 +89,7 @@ Add to `~/.claude/settings.json`:
     "Stop": [{
       "hooks": [{
         "type": "command",
-        "command": "/Users/yourusername/ep/projects/quick-ping-2/quick-ping-v2.sh",
+        "command": "/Users/yourusername/ep/projects/noisy-claude/noisy-claude.sh",
         "async": true,
         "timeout": 5
       }]
@@ -104,20 +104,20 @@ Add to `~/.claude/settings.json`:
 
 ```bash
 # Launch control panel
-quick-ping-v2.sh --control-panel
+noisy-claude.sh --control-panel
 
 # Check status (shows collections, events)
-quick-ping-v2.sh --status
+noisy-claude.sh --status
 
 # Set focus mode
-quick-ping-v2.sh --always
-quick-ping-v2.sh --smart
+noisy-claude.sh --always
+noisy-claude.sh --smart
 
 # List sounds from active collection
-quick-ping-v2.sh --list-sounds
+noisy-claude.sh --list-sounds
 
 # Play a sound
-quick-ping-v2.sh --play mGREETING.wav
+noisy-claude.sh --play mGREETING.wav
 ```
 
 ### Adding Sound Collections
@@ -145,7 +145,7 @@ quick-ping-v2.sh --play mGREETING.wav
 
 > **"Less, but better"** — Dieter Rams
 
-Quick-Ping 2 follows **Teenage Engineering × Dieter Rams** design principles:
+Noisy Claude follows **Teenage Engineering × Dieter Rams** design principles:
 
 ### Rams' 10 Principles Applied
 1. ✅ **Innovative** - Modern web tech, minimal JavaScript
@@ -169,11 +169,11 @@ Quick-Ping 2 follows **Teenage Engineering × Dieter Rams** design principles:
 ## Architecture
 
 ```
-quick-ping-2/
+noisy-claude/
 ├── control-panel.html          # Web UI (dark steel, green LEDs)
 ├── control-panel-server.py     # Flask API backend
 ├── launch-control-panel.sh     # Server launcher
-├── quick-ping-v2.sh           # Enhanced hook script (collections support)
+├── noisy-claude.sh           # Enhanced hook script (collections support)
 ├── detect-event.sh            # Smart event detection
 ├── config.json                # Configuration (events, collections, settings)
 ├── sounds/                    # Default sound collection
@@ -194,7 +194,7 @@ quick-ping-2/
   "collections": {
     "default": {
       "name": "Sims Sounds",
-      "path": "/Users/you/ep/projects/quick-ping-2/sounds",
+      "path": "/Users/you/ep/projects/noisy-claude/sounds",
       "description": "Original Sims game sounds"
     }
   },
