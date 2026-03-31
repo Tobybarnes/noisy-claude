@@ -167,11 +167,7 @@ print(config.get('master_enabled', True))
 
 if [ "$MASTER_ENABLED" != "True" ]; then exit 0; fi
 
-# Any Claude activity stops the decision loop
 DECISION_LOOP="$NOISY_CLAUDE_DIR/decision-loop.sh"
-if [ -f "$DECISION_LOOP" ]; then
-  "$DECISION_LOOP" stop 2>/dev/null || true
-fi
 
 # Get volume setting
 VOLUME=$(python3 -c "
@@ -200,6 +196,11 @@ fi
 # Play sound for each detected event
 while IFS= read -r EVENT; do
   [ -z "$EVENT" ] && continue
+
+  # Stop decision loop only when Claude starts new work (PreToolUse)
+  if [ "$EVENT" = "tool_pre" ] && [ -f "$DECISION_LOOP" ]; then
+    "$DECISION_LOOP" stop 2>/dev/null || true
+  fi
 
   # Get event config and active collection path
   read -r ENABLED SOUND_FILE SOUNDS_DIR_PATH <<< $(python3 -c "
