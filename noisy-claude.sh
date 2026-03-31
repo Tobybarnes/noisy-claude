@@ -167,6 +167,12 @@ print(config.get('master_enabled', True))
 
 if [ "$MASTER_ENABLED" != "True" ]; then exit 0; fi
 
+# Any Claude activity stops the decision loop
+DECISION_LOOP="$NOISY_CLAUDE_DIR/decision-loop.sh"
+if [ -f "$DECISION_LOOP" ]; then
+  "$DECISION_LOOP" stop 2>/dev/null || true
+fi
+
 # Get volume setting
 VOLUME=$(python3 -c "
 import json
@@ -240,6 +246,11 @@ print(event.get('enabled', False), event.get('sound', ''), sounds_path)
   AFPLAY_PID=$!
   echo "$AFPLAY_PID" > "$PID_FILE"
   disown "$AFPLAY_PID" 2>/dev/null || true
+
+  # Start decision loop after the decision_waiting sound plays
+  if [ "$EVENT" = "decision_waiting" ] && [ -f "$DECISION_LOOP" ]; then
+    "$DECISION_LOOP" start 2>/dev/null &
+  fi
 
   # Small delay between sounds if multiple events
   sleep 0.1

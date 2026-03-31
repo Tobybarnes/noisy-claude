@@ -290,6 +290,36 @@
           "enabled": true,
           "sound": "sfx-medium-punch.wav",
           "sound_label": "Medium punch input"
+        },
+        "decision_waiting": {
+          "description": "Waiting for your decision (repeats every 15s)",
+          "enabled": true,
+          "sound": "select.wav",
+          "sound_label": "Character select loop"
+        },
+        "file_read": {
+          "description": "Reading or scanning a file",
+          "enabled": true,
+          "sound": "select.wav",
+          "sound_label": "Select"
+        },
+        "file_write": {
+          "description": "Writing or editing a file",
+          "enabled": true,
+          "sound": "select.wav",
+          "sound_label": "Select"
+        },
+        "file_scan": {
+          "description": "Searching files (Glob/Grep)",
+          "enabled": true,
+          "sound": "select.wav",
+          "sound_label": "Select"
+        },
+        "web_search": {
+          "description": "Web fetch or search",
+          "enabled": true,
+          "sound": "select.wav",
+          "sound_label": "Select"
         }
       }
     },
@@ -578,6 +608,36 @@
           "enabled": true,
           "sound": "fSTORY0.wav",
           "sound_label": "Attentive listening"
+        },
+        "decision_waiting": {
+          "description": "Waiting for your decision (repeats every 15s)",
+          "enabled": true,
+          "sound": "fWAITING0.wav",
+          "sound_label": "Waiting patiently"
+        },
+        "file_read": {
+          "description": "Reading or scanning a file",
+          "enabled": true,
+          "sound": "fTHINK0.wav",
+          "sound_label": "Hmm..."
+        },
+        "file_write": {
+          "description": "Writing or editing a file",
+          "enabled": true,
+          "sound": "fAHHA0.wav",
+          "sound_label": "Got it"
+        },
+        "file_scan": {
+          "description": "Searching files (Glob/Grep)",
+          "enabled": true,
+          "sound": "fTHINK0.wav",
+          "sound_label": "Searching"
+        },
+        "web_search": {
+          "description": "Web fetch or search",
+          "enabled": true,
+          "sound": "fWOW0.wav",
+          "sound_label": "Ooh!"
         }
       }
     },
@@ -866,6 +926,36 @@
           "enabled": true,
           "sound": "0x68.wav",
           "sound_label": "Input received"
+        },
+        "decision_waiting": {
+          "description": "Waiting for your decision (repeats every 15s)",
+          "enabled": true,
+          "sound": "0x06.wav",
+          "sound_label": "Codec frequency dial"
+        },
+        "file_read": {
+          "description": "Reading or scanning a file",
+          "enabled": true,
+          "sound": "0x4C.wav",
+          "sound_label": "Radar sweep"
+        },
+        "file_write": {
+          "description": "Writing or editing a file",
+          "enabled": true,
+          "sound": "0x4D.wav",
+          "sound_label": "Data saved"
+        },
+        "file_scan": {
+          "description": "Searching files (Glob/Grep)",
+          "enabled": true,
+          "sound": "0x4E.wav",
+          "sound_label": "Scanning terrain"
+        },
+        "web_search": {
+          "description": "Web fetch or search",
+          "enabled": true,
+          "sound": "0x09.wav",
+          "sound_label": "Signal acquired"
         }
       }
     },
@@ -1149,6 +1239,36 @@
           "sound_label": "Silly thing",
           "description": "Idle for 10+ minutes",
           "enabled": true
+        },
+        "decision_waiting": {
+          "description": "Waiting for your decision (repeats every 15s)",
+          "enabled": true,
+          "sound": "hal_waiting.wav",
+          "sound_label": "HAL waiting"
+        },
+        "file_read": {
+          "description": "Reading or scanning a file",
+          "enabled": true,
+          "sound": "hal_thinking.wav",
+          "sound_label": "Processing"
+        },
+        "file_write": {
+          "description": "Writing or editing a file",
+          "enabled": true,
+          "sound": "hal_thinking.wav",
+          "sound_label": "Processing"
+        },
+        "file_scan": {
+          "description": "Searching files (Glob/Grep)",
+          "enabled": true,
+          "sound": "hal_thinking.wav",
+          "sound_label": "Scanning"
+        },
+        "web_search": {
+          "description": "Web fetch or search",
+          "enabled": true,
+          "sound": "hal_thinking.wav",
+          "sound_label": "Fetching"
         }
       }
     }

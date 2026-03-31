@@ -78,6 +78,26 @@ case "$EVENT" in
 
     # Detect specific tool patterns
     case "$TOOL_NAME" in
+      AskUserQuestion)
+        echo "decision_waiting"
+        ;;
+
+      Read)
+        echo "file_read"
+        ;;
+
+      Write|Edit)
+        echo "file_write"
+        ;;
+
+      Glob|Grep)
+        echo "file_scan"
+        ;;
+
+      WebFetch|WebSearch)
+        echo "web_search"
+        ;;
+
       Bash)
         # Detect git operations
         if echo "$TOOL_RESULT" | grep -q "git commit"; then
